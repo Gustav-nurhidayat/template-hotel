@@ -41,27 +41,6 @@ export default function Navbar() {
 
   /*
    * =====================================================
-   * SERVICES NAVIGATION
-   * =====================================================
-   */
-
-  const handleServicesClick = () => {
-    setMobileMenuOpen(false);
-
-    if (location.pathname === "/") {
-      document.getElementById("services")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      return;
-    }
-
-    navigate("/#services");
-  };
-
-  /*
-   * =====================================================
    * SECTION NAVIGATION
    * =====================================================
    */
@@ -93,15 +72,15 @@ export default function Navbar() {
     items-center
     h-full
     text-[14px]
-    font-semibold
+    font-medium
     tracking-[-0.01em]
     transition-all
     duration-200
 
     ${
       isActive(path)
-        ? "text-[#eef2f2]"
-        : "text-[#8a9494] hover:text-[#eef2f2]"
+        ? "text-[#f5efe3]"
+        : "text-[#aaa39a] hover:text-[#f5efe3]"
     }
   `;
 
@@ -119,8 +98,8 @@ export default function Navbar() {
           isScrolled
             ? `
               border-b
-              border-[#1a1d1d]
-              bg-[#060707]/90
+              border-[#2b2925]
+              bg-[#0b0a08]/90
               shadow-[0_12px_45px_rgba(0,0,0,0.35)]
               backdrop-blur-2xl
             `
@@ -153,7 +132,7 @@ export default function Navbar() {
             h-32
             w-64
             rounded-full
-            bg-[#15E0ED]/[0.05]
+            bg-[#d8b878]/[0.05]
             blur-3xl
           "
         />
@@ -166,7 +145,7 @@ export default function Navbar() {
             h-36
             w-72
             rounded-full
-            bg-[#15E0ED]/[0.025]
+            bg-[#d8b878]/[0.035]
             blur-3xl
           "
         />
@@ -207,14 +186,14 @@ export default function Navbar() {
           <span
             className="
               text-xl
-              font-black
-              tracking-[0.12em]
-              text-white
+              font-semibold
+              tracking-[0.16em]
+              text-[#f5efe3]
               transition-colors
               duration-300
-              group-hover:text-[#eef2f2]
+              group-hover:text-white
               sm:text-2xl
-              lg:text-[27px]
+              lg:text-[25px]
             "
           >
             CENTA
@@ -222,21 +201,20 @@ export default function Navbar() {
 
           <span
             className="
-              text-xl
-              font-black
-              tracking-[0.12em]
-              text-[#15E0ED]
+              text-[10px]
+              font-semibold
+              tracking-[0.28em]
+              text-[#d8b878]
               transition-colors
               duration-300
-              group-hover:text-[#15E0ED]
-              sm:text-2xl
-              lg:text-[27px]
+              group-hover:text-[#e4c88e]
+              sm:text-xs
+              lg:text-[13px]
             "
           >
-            LIMITED
+            HOTEL & RESORT
           </span>
         </Link>
-
 
         {/* =====================================================
             DESKTOP CENTER NAVIGATION
@@ -275,23 +253,22 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-[#15E0ED]
-                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
+                  bg-[#d8b878]
+                  shadow-[0_0_12px_rgba(216,184,120,0.5)]
                 "
               />
             )}
           </Link>
 
-
-          {/* ARTICLES */}
+          {/* ROOMS */}
 
           <Link
-            to="/articles"
-            className={navLinkClass("/articles")}
+            to="/rooms"
+            className={navLinkClass("/rooms")}
           >
-            Articles
+            Rooms
 
-            {isActive("/articles") && (
+            {isActive("/rooms") && (
               <span
                 className="
                   absolute
@@ -301,23 +278,22 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-[#15E0ED]
-                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
+                  bg-[#d8b878]
+                  shadow-[0_0_12px_rgba(216,184,120,0.5)]
                 "
               />
             )}
           </Link>
 
-
-          {/* APPROACH */}
+          {/* RESTAURANT */}
 
           <Link
-            to="/approach"
-            className={navLinkClass("/approach")}
+            to="/restaurant"
+            className={navLinkClass("/restaurant")}
           >
-            Approach
+            Restaurant
 
-            {isActive("/approach") && (
+            {isActive("/restaurant") && (
               <span
                 className="
                   absolute
@@ -327,23 +303,22 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-[#15E0ED]
-                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
+                  bg-[#d8b878]
+                  shadow-[0_0_12px_rgba(216,184,120,0.5)]
                 "
               />
             )}
           </Link>
 
-
-          {/* TEAM */}
+          {/* CAFÉ */}
 
           <Link
-            to="/team"
-            className={navLinkClass("/team")}
+            to="/cafe"
+            className={navLinkClass("/cafe")}
           >
-            Team
+            Café
 
-            {isActive("/team") && (
+            {isActive("/cafe") && (
               <span
                 className="
                   absolute
@@ -353,19 +328,18 @@ export default function Navbar() {
                   w-5
                   -translate-x-1/2
                   rounded-full
-                  bg-[#15E0ED]
-                  shadow-[0_0_12px_rgba(21,224,237,0.6)]
+                  bg-[#d8b878]
+                  shadow-[0_0_12px_rgba(216,184,120,0.5)]
                 "
               />
             )}
           </Link>
 
-
-          {/* SERVICES */}
+          {/* GALLERY */}
 
           <button
             type="button"
-            onClick={handleServicesClick}
+            onClick={() => handleSectionClick("gallery")}
             className="
               flex
               h-full
@@ -374,42 +348,41 @@ export default function Navbar() {
               bg-transparent
               p-0
               text-[14px]
-              font-semibold
+              font-medium
               tracking-[-0.01em]
-              text-[#8a9494]
+              text-[#aaa39a]
               transition-colors
               duration-200
-              hover:text-[#eef2f2]
+              hover:text-[#f5efe3]
             "
           >
-            Services
+            Gallery
           </button>
 
+          {/* LOCATION */}
 
-          {/* ABOUT */}
+          <Link
+            to="/location"
+            className={navLinkClass("/location")}
+          >
+            Location
 
-          <button
-  type="button"
-  onClick={() => handleSectionClick("why")}
-  className="
-    flex
-    h-full
-    items-center
-    border-0
-    bg-transparent
-    p-0
-    text-[14px]
-    font-semibold
-    tracking-[-0.01em]
-    text-[#8a9494]
-    transition-colors
-    duration-200
-    hover:text-[#eef2f2]
-  "
->
-  About
-</button>
-
+            {isActive("/location") && (
+              <span
+                className="
+                  absolute
+                  bottom-[17px]
+                  left-1/2
+                  h-[2px]
+                  w-5
+                  -translate-x-1/2
+                  rounded-full
+                  bg-[#d8b878]
+                  shadow-[0_0_12px_rgba(216,184,120,0.5)]
+                "
+              />
+            )}
+          </Link>
 
           {/* FAQ */}
 
@@ -424,19 +397,18 @@ export default function Navbar() {
               bg-transparent
               p-0
               text-[14px]
-              font-semibold
+              font-medium
               tracking-[-0.01em]
-              text-[#8a9494]
+              text-[#aaa39a]
               transition-colors
               duration-200
-              hover:text-[#eef2f2]
+              hover:text-[#f5efe3]
             "
           >
             FAQ
           </button>
 
         </nav>
-
 
         {/* =====================================================
             DESKTOP CTA — RIGHT
@@ -460,23 +432,23 @@ export default function Navbar() {
               gap-2
               rounded-lg
               border
-              border-[#15E0ED]/30
-              bg-[#15E0ED]
+              border-[#d8b878]/40
+              bg-[#d8b878]
               px-5
               py-3
               text-[12px]
-              font-black
-              tracking-wide
-              text-[#00171a]
-              shadow-[0_8px_30px_rgba(21,224,237,0.12)]
+              font-bold
+              tracking-[0.08em]
+              text-[#17130c]
+              shadow-[0_8px_30px_rgba(216,184,120,0.12)]
               transition-all
               duration-300
               hover:-translate-y-0.5
-              hover:bg-[#15E0ED]
-              hover:shadow-[0_12px_40px_rgba(21,224,237,0.22)]
+              hover:bg-[#e2c58a]
+              hover:shadow-[0_12px_40px_rgba(216,184,120,0.22)]
             "
           >
-            Work with us
+            BOOK NOW
 
             <ArrowRight
               className="
@@ -489,7 +461,6 @@ export default function Navbar() {
             />
           </button>
         </div>
-
 
         {/* =====================================================
             MOBILE MENU BUTTON — RIGHT
@@ -514,16 +485,16 @@ export default function Navbar() {
             justify-center
             rounded-2xl
             border
-            border-[#1a1d1d]
-            bg-[#0b0d0d]
-            text-[#8a9494]
+            border-[#2b2925]
+            bg-[#11100d]
+            text-[#aaa39a]
             shadow-[0_8px_25px_rgba(0,0,0,0.25)]
             backdrop-blur-xl
             transition-all
             duration-300
-            hover:border-[#15E0ED]/30
-            hover:bg-[#15E0ED]/[0.06]
-            hover:text-[#eef2f2]
+            hover:border-[#d8b878]/40
+            hover:bg-[#d8b878]/[0.06]
+            hover:text-[#f5efe3]
             lg:hidden
           "
         >
@@ -536,7 +507,6 @@ export default function Navbar() {
 
       </div>
 
-
       {/* =====================================================
           MOBILE MENU
       ====================================================== */}
@@ -545,8 +515,8 @@ export default function Navbar() {
         className={`
           overflow-hidden
           border-t
-          border-[#1a1d1d]
-          bg-[#060707]/95
+          border-[#2b2925]
+          bg-[#0b0a08]/95
           shadow-[0_20px_60px_rgba(0,0,0,0.4)]
           backdrop-blur-2xl
           transition-all
@@ -582,121 +552,121 @@ export default function Navbar() {
               px-4
               py-3.5
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
             Home
           </Link>
 
-
-          {/* ARTICLES */}
+          {/* ROOMS */}
 
           <Link
-            to="/articles"
+            to="/rooms"
             className="
+              block
+              w-full
               rounded-2xl
               px-4
               py-3.5
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
-            Articles
+            Rooms
           </Link>
 
-
-          {/* APPROACH */}
+          {/* RESTAURANT */}
 
           <Link
-            to="/approach"
+            to="/restaurant"
             className="
+              block
+              w-full
               rounded-2xl
               px-4
               py-3.5
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
-            Approach
+            Restaurant
           </Link>
 
-
-          {/* TEAM */}
+          {/* CAFÉ */}
 
           <Link
-            to="/team"
+            to="/cafe"
             className="
+              block
+              w-full
               rounded-2xl
               px-4
               py-3.5
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
-            Team
+            Café
           </Link>
 
-
-          {/* SERVICES */}
+          {/* GALLERY */}
 
           <button
             type="button"
-            onClick={handleServicesClick}
+            onClick={() => handleSectionClick("gallery")}
             className="
+              w-full
               rounded-2xl
               px-4
               py-3.5
               text-left
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
-            Services
+            Gallery
           </button>
 
+          {/* LOCATION */}
 
-          {/* ABOUT */}
-
-<button
-  type="button"
-  onClick={() => handleSectionClick("why")}
-  className="
-    w-full
-    rounded-2xl
-    px-4
-    py-3.5
-    text-left
-    text-[15px]
-    font-semibold
-    text-[#8a9494]
-    transition-all
-    hover:bg-[#0b0d0d]
-    hover:text-[#eef2f2]
-  "
->
-  About
-</button>
-
+          <Link
+            to="/location"
+            className="
+              block
+              w-full
+              rounded-2xl
+              px-4
+              py-3.5
+              text-[15px]
+              font-medium
+              text-[#aaa39a]
+              transition-all
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
+            "
+          >
+            Location
+          </Link>
 
           {/* FAQ */}
 
@@ -710,19 +680,18 @@ export default function Navbar() {
               py-3.5
               text-left
               text-[15px]
-              font-semibold
-              text-[#8a9494]
+              font-medium
+              text-[#aaa39a]
               transition-all
-              hover:bg-[#0b0d0d]
-              hover:text-[#eef2f2]
+              hover:bg-[#15130f]
+              hover:text-[#f5efe3]
             "
           >
             FAQ
           </button>
 
-
           {/* =================================================
-              MOBILE CTA — RIGHT
+              MOBILE CTA
           ================================================== */}
 
           <div
@@ -743,21 +712,22 @@ export default function Navbar() {
                 gap-2
                 rounded-lg
                 border
-                border-[#15E0ED]/30
-                bg-[#15E0ED]
+                border-[#d8b878]/40
+                bg-[#d8b878]
                 px-5
                 py-3
-                text-[15px]
-                font-black
-                text-[#00171a]
-                shadow-[0_10px_35px_rgba(21,224,237,0.12)]
+                text-[14px]
+                font-bold
+                tracking-[0.08em]
+                text-[#17130c]
+                shadow-[0_10px_35px_rgba(216,184,120,0.12)]
                 transition-all
                 duration-300
-                hover:bg-[#15E0ED]
-                hover:shadow-[0_12px_40px_rgba(21,224,237,0.2)]
+                hover:bg-[#e2c58a]
+                hover:shadow-[0_12px_40px_rgba(216,184,120,0.2)]
               "
             >
-              Work With Us
+              BOOK NOW
 
               <ArrowRight
                 className="

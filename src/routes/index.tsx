@@ -8,10 +8,11 @@ import ProtectedRoute from "../components/common/ProtectedRoute";
 
 // Public Website
 import LandingPage from "../landing-page/LandingPage";
-import PublicArticles from "../landing-page/Articles";
-import ArticleDetail from "../landing-page/ArticleDetail";
-import Team from "../landing-page/Team";
-import Approach from "../landing-page/Approach";
+import Rooms from "../landing-page/Rooms";
+import RoomDetail from "../landing-page/RoomDetail";
+import Restaurant from "../landing-page/Restaurant";
+import Location from "../landing-page/Location";
+import Cafe from "../landing-page/Cafe";
 
 // Auth
 import Login from "../pages/Login";
@@ -53,7 +54,6 @@ import EditService from "../pages/Services/EditService";
 import Settings from "../pages/Settings/Settings";
 import AdminTeam from "../pages/Team";
 import About from "../pages/About";
-import TeamProfile from "../landing-page/TeamProfile";
 
 
 export default function AppRouter() {
@@ -63,44 +63,14 @@ export default function AppRouter() {
       <Routes>
 
       
-    <Route element={<PublicLayout />}>
-
-          <Route
-            index
-            element={<LandingPage />}
-          />
-
-
-          <Route
-            path="articles"
-            element={<PublicArticles />}
-          />
-
-
-       <Route
-  path="articles/:slug"
-  element={<ArticleDetail />}
-/>
-
-
-          <Route
-            path="team"
-            element={<Team />}
-          />
-
-          <Route
- path="team/:slug"
- element={<TeamProfile />}
-/>
-
-
-          <Route
-            path="approach"
-            element={<Approach />}
-          />
-
-        </Route>
-
+   <Route element={<PublicLayout />}>
+  <Route index element={<LandingPage />} />
+  <Route path="rooms" element={<Rooms />} />
+  <Route path="rooms/:slug" element={<RoomDetail />} />
+  <Route path="restaurant" element={<Restaurant />} />
+  <Route path="location" element={<Location />} />
+<Route path="cafe" element={<Cafe />} />
+</Route>
 
 
 

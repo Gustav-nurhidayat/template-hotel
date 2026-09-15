@@ -1,21 +1,179 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  FaWhatsapp,
-  FaInstagram,
-  FaEnvelope,
-  FaGithub,
-} from "react-icons/fa6";
+  ArrowRight,
+  ChevronDown,
+  MapPin,
+  Phone,
+  Mail,
+  Wifi,
+  Waves,
+  Dumbbell,
+  Utensils,
+  Sparkles,
+  Car,
+  Star,
+  CalendarDays,
+  Users,
+  BedDouble,
+} from "lucide-react";
 import toast from "react-hot-toast";
 import SEO from "../components/SEO";
 
-import {
-  sendContactMessage,
-} from "../services/contact.service";
+import { sendContactMessage } from "../services/contact.service";
 
-import {
-  ArrowRight,
-  ChevronDown,
-} from "lucide-react";
+/* =========================================================
+   HOTEL CONFIGURATION
+   Change these values when selling the template
+========================================================= */
+
+const hotelConfig = {
+  name: "Centa Hotel",
+  location: "Jakarta, Indonesia",
+  address: "Jl. Sudirman No. 88, Jakarta",
+  phone: "+62 21 1234 5678",
+  email: "reservation@Centahotel.com",
+
+  tagline: "Stay somewhere worth remembering.",
+
+  description:
+    "A refined hotel experience combining thoughtful design, exceptional hospitality, and modern comfort in the heart of the city.",
+
+  whatsapp: "6281234567890",
+
+  instagram: "https://instagram.com/",
+};
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const rooms = [
+  {
+    name: "Deluxe Room",
+    description:
+      "A beautifully appointed room designed for comfortable city stays and peaceful nights.",
+    price: 850000,
+    size: "32 m²",
+    guests: "2 Guests",
+    bed: "King Bed",
+    image:
+      "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    name: "Executive Suite",
+    description:
+      "A spacious suite offering a separate living area, refined interiors, and premium amenities.",
+    price: 1450000,
+    size: "48 m²",
+    guests: "3 Guests",
+    bed: "King Bed",
+    image:
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    name: "Presidential Suite",
+    description:
+      "An exceptional suite created for guests seeking privacy, space, and an elevated stay.",
+    price: 2800000,
+    size: "82 m²",
+    guests: "4 Guests",
+    bed: "King Bed",
+    image:
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85",
+  },
+];
+
+const facilities = [
+  {
+    title: "Infinity Pool",
+    description:
+      "Relax and unwind beside our panoramic swimming pool.",
+    icon: Waves,
+  },
+  {
+    title: "Fine Dining",
+    description:
+      "Enjoy carefully crafted dishes prepared by our culinary team.",
+    icon: Utensils,
+  },
+  {
+    title: "Wellness & Spa",
+    description:
+      "Recharge your body and mind with our wellness experiences.",
+    icon: Sparkles,
+  },
+  {
+    title: "Fitness Center",
+    description:
+      "Stay active with modern equipment available throughout the day.",
+    icon: Dumbbell,
+  },
+  {
+    title: "Complimentary Wi-Fi",
+    description:
+      "Fast and reliable internet access throughout the property.",
+    icon: Wifi,
+  },
+  {
+    title: "Private Parking",
+    description:
+      "Convenient and secure parking for hotel guests.",
+    icon: Car,
+  },
+];
+
+const testimonials = [
+  {
+    name: "Daniel Morgan",
+    role: "Business Traveler",
+    text:
+      "Beautiful property, excellent service, and an incredibly comfortable room. Everything felt thoughtfully designed.",
+  },
+  {
+    name: "Sofia Anderson",
+    role: "Leisure Guest",
+    text:
+      "The atmosphere was elegant without feeling cold. The staff were wonderful and the entire stay felt effortless.",
+  },
+  {
+    name: "Michael Tan",
+    role: "Frequent Traveler",
+    text:
+      "One of the best hotel experiences I've had in the city. The location and room quality were excellent.",
+  },
+];
+
+const faqs = [
+  {
+    question: "What time is check-in and check-out?",
+    answer:
+      "Check-in starts at 14:00 and check-out is until 12:00. Early check-in and late check-out may be available depending on room availability.",
+  },
+  {
+    question: "Does the hotel provide complimentary Wi-Fi?",
+    answer:
+      "Yes. Complimentary high-speed Wi-Fi is available throughout the hotel, including guest rooms and public areas.",
+  },
+  {
+    question: "Is breakfast included?",
+    answer:
+      "Breakfast availability depends on the selected room package. You can see the included benefits during the reservation process.",
+  },
+  {
+    question: "Does the hotel have parking?",
+    answer:
+      "Yes. Private parking is available for hotel guests.",
+  },
+  {
+    question: "Can I request an airport transfer?",
+    answer:
+      "Yes. Airport transfer arrangements can be requested in advance through our reservation team.",
+  },
+];
+
+/* =========================================================
+   REVEAL HOOK
+========================================================= */
 
 function useReveal() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -35,7 +193,7 @@ function useReveal() {
       },
       {
         threshold: 0.12,
-        rootMargin: "0px 0px -60px 0px",
+        rootMargin: "0px 0px -50px 0px",
       }
     );
 
@@ -47,46 +205,36 @@ function useReveal() {
   return { ref, visible };
 }
 
-export default function LandingPage() {
-  
+/* =========================================================
+   COMPONENT
+========================================================= */
 
-  const servicesReveal = useReveal();
-  const whyReveal = useReveal();
+export default function HotelLandingPage() {
+  const roomsReveal = useReveal();
+  const facilitiesReveal = useReveal();
+  const aboutReveal = useReveal();
+  const offersReveal = useReveal();
+  const galleryReveal = useReveal();
+  const testimonialsReveal = useReveal();
   const contactReveal = useReveal();
-
-  
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const [faqVisible, setFaqVisible] = useState(false);
 
-  const faqSectionRef = useRef<HTMLDivElement | null>(null);
 
-  
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    checkIn: "",
+    checkOut: "",
+    guests: "2",
+    message: "",
+  });
 
-  useEffect(() => {
-    const element = faqSectionRef.current;
-
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setFaqVisible(true);
-          observer.unobserve(element);
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
-
-  
+  /* =======================================================
+     HASH SCROLL
+  ======================================================= */
 
   useEffect(() => {
     const id = window.location.hash.replace("#", "");
@@ -105,16 +253,9 @@ export default function LandingPage() {
     }
   }, []);
 
-  
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    service: "",
-    message: "",
-  });
+  /* =======================================================
+     FORM
+  ======================================================= */
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -136,2348 +277,1713 @@ export default function LandingPage() {
       await sendContactMessage({
         name: formData.name,
         email: formData.email,
-        subject:
-          `${formData.service || "Project Inquiry"} - ${
-            formData.company || "Website Visitor"
-          }`,
+        subject: `Hotel Reservation Inquiry - ${hotelConfig.name}`,
         message: `
 Phone: ${formData.phone}
 
-Company:
-${formData.company}
+Check-in:
+${formData.checkIn}
 
-Service:
-${formData.service}
+Check-out:
+${formData.checkOut}
 
-Project Details:
+Guests:
+${formData.guests}
+
+Message:
 ${formData.message}
         `.trim(),
       });
 
       toast.success(
-        "Message sent successfully. Our team will contact you soon."
+        "Your request has been sent. Our reservation team will contact you shortly."
       );
 
       setFormData({
         name: "",
         email: "",
         phone: "",
-        company: "",
-        service: "",
+        checkIn: "",
+        checkOut: "",
+        guests: "2",
         message: "",
       });
     } catch (error: any) {
-      console.error(
-        "CONTACT ERROR:",
-        error
-      );
+      console.error("RESERVATION ERROR:", error);
 
       toast.error(
         error?.response?.data?.message ??
-          "Failed sending message."
+          "Unable to send your request."
       );
     }
   };
 
-  
-
-  const services = [
-    {
-      title: "Software Development",
-      description:
-        "Pengembangan software custom yang dirancang sesuai kebutuhan bisnis, workflow, dan skala organisasi.",
-      tags: ["Custom Software", "API", "Backend"],
-    },
-    {
-      title: "Web Development",
-      description:
-        "Membangun website dan web application yang modern, responsif, cepat, scalable, dan security-aware.",
-      tags: ["Web App", "Frontend", "Backend"],
-    },
-    {
-      title: "Application Development",
-      description:
-        "Mengembangkan aplikasi digital yang membantu bisnis menciptakan proses kerja lebih efisien dan terintegrasi.",
-      tags: ["Application", "Integration", "Automation"],
-    },
-    {
-      title: "Cyber Security",
-      description:
-        "Mengidentifikasi dan mengurangi risiko keamanan melalui security assessment, penetration testing, dan hardening.",
-      tags: ["Pentest", "Assessment", "Hardening"],
-    },
-    {
-      title: "Infrastructure & Cloud",
-      description:
-        "Membantu merancang dan mengamankan infrastruktur server, network, cloud, dan environment digital.",
-      tags: ["Cloud", "Network", "Infrastructure"],
-    },
-    {
-      title: "Game Development",
-      description:
-        "Pengalaman interaktif dan permainan yang dikembangkan dengan teknologi modern, mulai dari konsep dan rekayasa hingga produk digital yang matang.",
-      tags: ["Game", "Development", "Integration"],
-    },
-  ];
-
-  
-
-  const faqs = [
-    {
-      question: "Apa saja layanan utama Centa Limited?",
-      answer:
-        "Centa Limited bergerak di bidang software development dan cyber security. Layanan kami mencakup web development, application development, custom software, infrastructure, penetration testing, security assessment, dan security advisory.",
-    },
-    {
-      question: "Apakah Centa hanya menyediakan layanan cyber security?",
-      answer:
-        "Tidak. Software engineering merupakan salah satu fokus utama Centa. Kami mengembangkan website, web application, custom software, dan aplikasi digital, dengan security sebagai bagian penting dari proses engineering.",
-    },
-    {
-      question: "Apakah Centa bisa mengembangkan aplikasi custom?",
-      answer:
-        "Ya. Kami dapat membantu mengembangkan aplikasi berdasarkan kebutuhan bisnis, mulai dari perancangan konsep, UI/UX, backend, frontend, database, API integration, deployment, hingga security review.",
-    },
-    {
-      question:
-        "Apakah security testing bisa dilakukan pada aplikasi yang sudah ada?",
-      answer:
-        "Bisa. Kami dapat melakukan assessment terhadap aplikasi atau infrastructure yang sudah berjalan untuk membantu mengidentifikasi vulnerability, configuration issue, dan risiko keamanan lainnya.",
-    },
-  ];
-
-  
-
-  const headings = [
-    "Build secure digital products with confidence",
-    "Protect your business from modern cyber threats",
-    "Create software that grows with your needs",
-    "Empower your team with reliable technology",
-  ];
-
-  const [headingIndex, setHeadingIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentHeading = headings[headingIndex];
-
-    let speed = isDeleting ? 40 : 80;
-
-    if (
-      !isDeleting &&
-      charIndex === currentHeading.length
-    ) {
-      speed = 2000;
-    }
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (charIndex < currentHeading.length) {
-          setCharIndex((prev) => prev + 1);
-        } else {
-          setIsDeleting(true);
-        }
-      } else {
-        if (charIndex > 0) {
-          setCharIndex((prev) => prev - 1);
-        } else {
-          setIsDeleting(false);
-          setHeadingIndex(
-            (prev) => (prev + 1) % headings.length
-          );
-        }
-      }
-    }, speed);
-
-    return () => clearTimeout(timeout);
-  }, [
-    charIndex,
-    headingIndex,
-    isDeleting,
-  ]);
-
-return (
-  <>
-    <SEO
-      title="Centa Limited — Engineering Meets Cybersecurity"
-      description="Centa Limited provides software development, web development, application development, cybersecurity, and secure digital infrastructure solutions."
-      canonical="https://centa.ltd/"
-    />
-
-    <div className="min-h-screen overflow-hidden text-white">
-
-      
-
-    <main>
-  
-
-<section
-  id="top"
-  className="
-    relative
-    flex
-    min-h-screen
-    items-center
-    overflow-hidden
-    scroll-mt-24
-    px-6
-    py-24
-    sm:px-8
-    lg:px-12Cannot find name 'faqSectionRef'.ts(2304)
-any
-  "
->
-  
-
-  <div
-    className="
-      pointer-events-none
-      absolute
-      right-[-180px]
-      top-[30%]
-      h-[420px]
-      w-[420px]
-      rounded-full
-      bg-violet-600/[0.045]
-      blur-[140px]
-    "
-  />
-
-  <div
-    className="
-      pointer-events-none
-      absolute
-      left-[-220px]
-      top-[15%]
-      h-[360px]
-      w-[360px]
-      rounded-full
-      bg-cyan-400/[0.025]
-      blur-[130px]
-    "
-  />
-
-  {/* Top cyan line */}
-
-  <div
-    className="
-      pointer-events-none
-      absolute
-      inset-x-0
-      top-0
-      h-px
-      bg-gradient-to-r
-      from-transparent
-      via-cyan-400/20
-      to-transparent
-    "
-  />
-
-  
-
-  
-
-  <div className="relative z-10 mx-auto w-full max-w-7xl">
-
-   
-
-<div className="mx-auto w-full max-w-5xl text-center">
-
-  
-  <div className="relative">
-
-    {/* Typing Heading */}
-
-    <h1
-      className="
-        min-h-[150px]
-        text-5xl
-        font-black
-        leading-[0.98]
-        tracking-[-0.055em]
-        text-white
-        sm:min-h-[180px]
-        sm:text-6xl
-        lg:min-h-[185px]
-        lg:text-[76px]
-      "
-    >
-      <span
-        className="
-          bg-gradient-to-r
-          from-white
-          via-slate-200
-          to-white
-          bg-clip-text
-          text-transparent
-        "
-      >
-        {headings[headingIndex].substring(0, charIndex)}
-      </span>
-
-      {/* Typing cursor */}
-
-      <span
-        className="
-          ml-1
-          inline-block
-          text-white
-          animate-pulse
-        "
-      >
-        |
-      </span>
-    </h1>
-
-    {/* Accent line */}
-
-    <span
-      className="
-        absolute
-        -bottom-3
-        left-1/2
-        h-px
-        w-24
-        -translate-x-1/2
-        bg-white/30
-      "
-    />
-
-  </div>
-  
-
-  
-
-  <div className="mx-auto mt-10 max-w-2xl">
-
-    <p
-      className="
-        text-base
-        leading-8
-        text-slate-400
-        sm:text-lg
-      "
-    >
-      Centa membantu bisnis membangun software, digital
-      products, infrastructure, dan security systems yang
-      modern, scalable, dan resilient dengan pendekatan
-      security-first untuk menghadapi ancaman digital masa kini.
-    </p>
-
-    {/* Security-first indicator */}
-
-    <div
-      className="
-        mt-4
-        flex
-        items-center
-        justify-center
-        gap-2
-        text-xs
-        font-semibold
-        text-slate-400
-      "
-    >
-      <span
-        className="
-          h-1
-          w-1
-          rounded-full
-          bg-white/60
-        "
+  return (
+    <>
+      <SEO
+        title={`${hotelConfig.name} — ${hotelConfig.tagline}`}
+        description={hotelConfig.description}
+        canonical="https://example.com/"
       />
 
-      Security-first engineering
-    </div>
-
-  </div>
-
-
-  <div
-    className="
-      mt-9
-      flex
-      flex-col
-      justify-center
-      gap-3
-      sm:flex-row
-    "
-  >
-
-    
-
-    <a
-  href="#contact"
-  className="
-    group
-    relative
-    isolate
-    inline-flex
-    items-center
-    justify-center
-    gap-3
-    overflow-hidden
-    rounded-xl
-    border
-    border-cyan-300/30
-    bg-cyan-400
-    px-6
-    py-3.5
-    text-sm
-    font-bold
-    text-[#030712]
-    shadow-[0_0_30px_rgba(34,211,238,0.10)]
-    transition-all
-    duration-500
-    hover:-translate-y-1
-    hover:bg-cyan-300
-    hover:shadow-[0_15px_45px_rgba(34,211,238,0.22)]
-  "
->
-  {/* Moving light */}
-
-  <span
-    className="
-      pointer-events-none
-      absolute
-      inset-y-0
-      left-[-60%]
-      w-[45%]
-      skew-x-[-20deg]
-      bg-white/30
-      blur-md
-      transition-all
-      duration-700
-      group-hover:left-[120%]
-    "
-  />
-
-  <span className="relative z-10">
-    Start a Project
-  </span>
-
-  <ArrowRight
-    className="
-      relative
-      z-10
-      h-4
-      w-4
-      transition-transform
-      duration-300
-      group-hover:translate-x-1
-    "
-  />
-</a>
-
-    
-
-    <a
-      href="#services"
-      className="
-        group
-        relative
-        inline-flex
-        items-center
-        justify-center
-        gap-3
-        overflow-hidden
-        rounded-xl
-        border
-        border-white/[0.10]
-        bg-white/[0.025]
-        px-6
-        py-3.5
-        text-sm
-        font-semibold
-        text-white
-        backdrop-blur-xl
-        transition-all
-        duration-500
-        hover:-translate-y-1
-        hover:border-white/20
-        hover:bg-white/[0.05]
-        hover:shadow-[0_15px_45px_rgba(255,255,255,0.04)]
-      "
-    >
-
-      {/* Hover grid */}
-
-      <span
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-0
-          transition-opacity
-          duration-500
-          group-hover:opacity-100
-          [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)]
-          [background-size:16px_16px]
-        "
-      />
-
-      <span
-        className="
-          relative
-          z-10
-          h-1.5
-          w-1.5
-          rounded-full
-          bg-white/50
-          transition-all
-          duration-300
-          group-hover:bg-white
-          group-hover:shadow-[0_0_10px_rgba(255,255,255,0.7)]
-        "
-      />
-
-      <span className="relative z-10">
-       Why Centa
-      </span>
-
-      <ArrowRight
-        className="
-          relative
-          z-10
-          h-4
-          w-4
-          text-slate-500
-          transition-all
-          duration-300
-          group-hover:translate-x-1
-          group-hover:text-white
-        "
-      />
-
-    </a>
-
-  </div>
-
-</div>
-</div>
-
-</section>
-
-     
-
- 
-
-<section
-  id="services"
-  className="relative scroll-mt-24"
->
- 
-
-  <div
-    aria-hidden="true"
-    className="
-      pointer-events-none
-      absolute
-      -left-[220px]
-      top-[12%]
-      h-[520px]
-      w-[520px]
-      rounded-full
-      bg-cyan-400/[0.08]
-      blur-[150px]
-    "
-  />
-
-  <div
-    aria-hidden="true"
-    className="
-      pointer-events-none
-      absolute
-      -left-[220px]
-      bottom-[5%]
-      h-[460px]
-      w-[460px]
-      rounded-full
-      bg-violet-500/[0.025]
-      blur-[150px]
-    "
-  />
-
-  
-
-  <div className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
+      <div className="min-h-screen bg-[#0d0d0c] text-[#f4f1eb]">
 
 
 
-<div className="mb-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+        <main>
 
-  <div>
+          {/* =================================================
+              HERO
+          ================================================= */}
 
-    {/* Label */}
-   
-
-    {/* Heading */}
-    <h2
-      className="
-        mt-6
-        text-4xl
-        font-black
-        tracking-[-0.045em]
-        text-[var(--centa-text)]
-        sm:text-5xl
-        lg:text-[58px]
-        lg:leading-[1.02]
-      "
-    >
-      Technology built
-
-     <span
-  className="
-    block
-    bg-gradient-to-r
-    from-white
-    via-[var(--centa-cyan)]
-    to-cyan-300
-    bg-clip-text
-    text-transparent
-  "
->
-  for real businesses.
-</span>
-    </h2>
-
-  </div>
-
-  {/* Description */}
-  <div className="lg:pl-16 lg:pb-1">
-
-    <p className="max-w-xl text-sm leading-7 text-slate-400">
-      Dari membangun aplikasi dari nol hingga mengamankan sistem
-      yang sudah berjalan, Centa membantu bisnis mengembangkan
-      teknologi yang reliable, scalable, dan security-aware.
-    </p>
-
-  </div>
-
-</div>
-
- 
-
-<div
-  ref={servicesReveal.ref}
-  className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
->
-  {services.map((service, index) => {
-
-    const fromLeft = index % 2 === 0;
-
-    return (
-      <article
-        key={service.title}
-        style={{
-          transitionDelay: servicesReveal.visible
-            ? `${index * 90}ms`
-            : "0ms",
-        }}
-        className={`
-          group
-          relative
-          isolate
-          h-full
-          overflow-hidden
-          rounded-[1.75rem]
-          border
-          border-[#1a1d1d]
-          bg-[#0b0d0d]/75
-          p-7
-          backdrop-blur-xl
-
-          transition-all
-          duration-700
-          ease-[cubic-bezier(0.22,1,0.36,1)]
-
-          hover:-translate-y-0.5
-          hover:border-[#15E0ED]/25
-          hover:bg-[#0f1414]/90
-          hover:shadow-[0_20px_70px_rgba(0,0,0,0.35)]
-
-          ${
-            servicesReveal.visible
-              ? `
-                translate-x-0
-                translate-y-0
-                scale-100
-                opacity-100
-                blur-0
-              `
-              : fromLeft
-                ? `
-                  -translate-x-12
-                  translate-y-2
-                  scale-[0.97]
-                  opacity-0
-                  blur-[5px]
-                `
-                : `
-                  translate-x-12
-                  translate-y-2
-                  scale-[0.97]
-                  opacity-0
-                  blur-[5px]
-                `
-          }
-        `}
-      >
-
-        
-
-        <div
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            opacity-[0.025]
-            transition-opacity
-            duration-500
-            group-hover:opacity-[0.05]
-
-            [background-image:linear-gradient(rgba(34,211,238,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.4)_1px,transparent_1px)]
-
-            [background-size:32px_32px]
-          "
-        />
-
-
-        
-
-        <div
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            -right-16
-            -top-16
-            h-40
-            w-40
-            rounded-full
-            bg-cyan-400/[0.04]
-            blur-3xl
-            transition-all
-            duration-700
-            group-hover:scale-125
-            group-hover:bg-cyan-400/[0.08]
-          "
-        />
-
-
-       
-
-        <div className="relative z-10">
-
-          {/* TITLE */}
-
-          <h3
+          <section
+            id="home"
             className="
-              text-xl
-              font-bold
-              tracking-[-0.02em]
-              text-white
-              transition-colors
-              duration-300
-              group-hover:text-cyan-300
-            "
-          >
-            {service.title}
-          </h3>
-
-
-          {/* DESCRIPTION */}
-
-          <p
-            className="
-              mt-3
-              text-[11px]
-              leading-5
-              text-slate-400
-              transition-colors
-              duration-300
-              group-hover:text-slate-300
-            "
-          >
-            {service.description}
-          </p>
-
-
-
-
-          <div
-            className="
-              mt-6
-              flex
-              items-center
-              justify-between
-              pt-4
+              relative
+              min-h-screen
+              overflow-hidden
+              scroll-mt-24
             "
           >
 
-            <a
-              href="#contact"
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
+            <div
               className="
-                group/contact
-                inline-flex
+                absolute
+                inset-0
+                bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2200&q=90')]
+                bg-cover
+                bg-center
+              "
+            />
+
+            <div className="absolute inset-0 bg-black/50" />
+
+            <div
+              className="
+                absolute
+                inset-0
+                bg-gradient-to-t
+                from-[#0d0d0c]
+                via-transparent
+                to-black/20
+              "
+            />
+
+            <div
+              className="
+                relative
+                z-10
+                mx-auto
+                flex
+                min-h-screen
+                max-w-7xl
                 items-center
-                gap-2
-                rounded-lg
-                border
-                border-cyan-400/20
-                bg-cyan-400/[0.04]
-                px-3
-                py-2
-                font-mono
-                text-[8px]
-                font-bold
-                uppercase
-                tracking-[0.14em]
-                text-cyan-400
-
-                transition-all
-                duration-300
-
-                hover:border-cyan-400/40
-                hover:bg-cyan-400/[0.08]
-                hover:text-cyan-300
-                hover:shadow-[0_0_20px_rgba(34,211,238,0.10)]
+                px-6
+                pb-32
+                pt-36
+                sm:px-8
+                lg:px-10
               "
             >
-              Contact Us
 
-              <ArrowRight
-                className="
-                  h-3
-                  w-3
-                  transition-transform
-                  duration-300
-                  group-hover/contact:translate-x-1
-                "
-              />
-            </a>
+              <div className="max-w-4xl">
 
-          </div>
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="h-px w-10 bg-[#c8a96b]" />
 
-        </div>
+                  <span
+                    className="
+                      text-[10px]
+                      font-semibold
+                      uppercase
+                      tracking-[0.3em]
+                      text-white/75
+                    "
+                  >
+                    Welcome to {hotelConfig.name}
+                  </span>
+                </div>
 
+                <h1
+                  className="
+                    max-w-4xl
+                    font-serif
+                    text-5xl
+                    font-medium
+                    leading-[0.98]
+                    tracking-[-0.04em]
+                    text-white
+                    sm:text-7xl
+                    lg:text-[88px]
+                  "
+                >
+                  Stay somewhere
+                  <br />
 
-       
+                  <span className="italic text-[#e3d0a6]">
+                    worth remembering.
+                  </span>
+                </h1>
 
-        <div
-          className="
-            pointer-events-none
-            absolute
-            left-0
-            top-0
-            h-6
-            w-6
-            border-l
-            border-t
-            border-cyan-400/10
+                <p
+                  className="
+                    mt-7
+                    max-w-xl
+                    text-sm
+                    leading-7
+                    text-white/70
+                    sm:text-base
+                  "
+                >
+                  {hotelConfig.description}
+                </p>
 
-            transition-all
-            duration-500
+                <div className="mt-9 flex flex-wrap gap-3">
 
-            group-hover:h-8
-            group-hover:w-8
-            group-hover:border-cyan-400/40
-          "
-        />
+                  <a
+                    href="#contact"
+                    className="
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-lg
+                      bg-[#c8a96b]
+                      px-6
+                      py-3.5
+                      text-sm
+                      font-bold
+                      text-[#17130c]
+                      transition
+                      hover:-translate-y-0.5
+                      hover:bg-[#d8bd82]
+                    "
+                  >
+                    Reserve Your Stay
 
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
 
-       
+                  <a
+                    href="/rooms"
+                    className="
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-lg
+                      border
+                      border-white/20
+                      bg-white/5
+                      px-6
+                      py-3.5
+                      text-sm
+                      font-semibold
+                      text-white
+                      backdrop-blur-md
+                      transition
+                      hover:bg-white/10
+                    "
+                  >
+                    Explore Rooms
+                  </a>
 
-        <div
-          className="
-            pointer-events-none
-            absolute
-            bottom-0
-            right-0
-            h-6
-            w-6
-            border-b
-            border-r
-            border-cyan-400/10
+                </div>
 
-            transition-all
-            duration-500
+              </div>
+            </div>
 
-            group-hover:h-8
-            group-hover:w-8
-            group-hover:border-cyan-400/40
-          "
-        />
+            {/* Hero stats */}
 
-      </article>
-    );
-  })}
-</div>
+            <div
+              className="
+                absolute
+                bottom-36
+                right-8
+                z-10
+                hidden
+                lg:block
+              "
+            >
+              <div className="flex items-center gap-8">
 
-</div>
+                <div>
+                  <div className="font-serif text-2xl">
+                    4.9
+                  </div>
 
-</section>
+                  <div className="mt-1 flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className="h-3 w-3 fill-[#c8a96b] text-[#c8a96b]"
+                      />
+                    ))}
+                  </div>
 
+                  <div className="mt-1 text-[9px] uppercase tracking-wider text-white/40">
+                    Guest rating
+                  </div>
+                </div>
 
+                <div className="h-12 w-px bg-white/20" />
 
+                <div>
+                  <div className="font-serif text-2xl">
+                    24/7
+                  </div>
 
-<section
-  id="why"
-  className="relative z-[1] py-[100px]"
->
-  <div className="mx-auto max-w-[1180px] px-8">
+                  <div className="mt-1 text-[9px] uppercase tracking-wider text-white/40">
+                    Guest service
+                  </div>
+                </div>
 
-    {/* TITLE */}
-    <h2
-      className="
-        mb-4
-        max-w-[640px]
-        text-[clamp(26px,3.6vw,40px)]
-        font-extrabold
-        tracking-[-1px]
-        text-[#eef2f2]
-      "
-    >
-      Why Centa?
-    </h2>
+              </div>
+            </div>
 
-    {/* DESCRIPTION */}
-    <p
-      className="
-        mb-14
-        max-w-[560px]
-        text-base
-        leading-relaxed
-        text-[#8a9494]
-      "
-    >
-      Built with a focus on innovation, security, and reliability,
-      Centa develops technology designed to solve real-world challenges,
-      empowering developers, businesses, and communities with solutions
-      built for today and ready for tomorrow.
-    </p>
+          </section>
 
-   {/* CARDS */}
-<div
-  ref={whyReveal.ref}
-  className="
-    grid
-    grid-cols-1
-    overflow-hidden
-    rounded-xl
-    border
-    border-[#1a1d1d]
-    sm:grid-cols-2
-    lg:grid-cols-4
-  "
->
+          {/* =================================================
+              BOOKING BAR
+          ================================================= */}
 
- 
-  <div
-    style={{
-      transitionDelay: whyReveal.visible ? "0ms" : "0ms",
-    }}
-    className={`
-      group
-      bg-[#0b0d0d]
-      px-[22px]
-      py-7
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-      hover:bg-[#0f1414]
-
-      ${
-        whyReveal.visible
-          ? "translate-y-0 opacity-100 blur-0"
-          : "translate-y-8 opacity-0 blur-[4px]"
-      }
-    `}
-  >
-    <svg
-      className="
-        mb-[18px]
-        h-[34px]
-        w-[34px]
-        text-[#15E0ED]
-      "
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    >
-      <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
-    </svg>
-
-    <h3
-      className="
-        mb-2
-        text-base
-        font-bold
-        text-[#eef2f2]
-      "
-    >
-      Innovative
-    </h3>
-
-    <p
-      className="
-        text-[13.5px]
-        text-[#8a9494]
-      "
-    >
-      Modern technology built to create meaningful solutions.
-    </p>
-  </div>
-
-
-
-  <div
-    style={{
-      transitionDelay: whyReveal.visible ? "100ms" : "0ms",
-    }}
-    className={`
-      group
-      bg-[#0b0d0d]
-      px-[22px]
-      py-7
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-      hover:bg-[#0f1414]
-
-      ${
-        whyReveal.visible
-          ? "translate-y-0 opacity-100 blur-0"
-          : "translate-y-8 opacity-0 blur-[4px]"
-      }
-    `}
-  >
-    <svg
-      className="
-        mb-[18px]
-        h-[34px]
-        w-[34px]
-        text-[#15E0ED]
-      "
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    >
-      <rect
-        x="3"
-        y="3"
-        width="7"
-        height="7"
-        rx="1.2"
-      />
-
-      <rect
-        x="14"
-        y="3"
-        width="7"
-        height="7"
-        rx="1.2"
-      />
-
-      <rect
-        x="3"
-        y="14"
-        width="7"
-        height="7"
-        rx="1.2"
-      />
-
-      <rect
-        x="14"
-        y="14"
-        width="7"
-        height="7"
-        rx="1.2"
-      />
-    </svg>
-
-    <h3
-      className="
-        mb-2
-        text-base
-        font-bold
-        text-[#eef2f2]
-      "
-    >
-      Reliable
-    </h3>
-
-    <p
-      className="
-        text-[13.5px]
-        text-[#8a9494]
-      "
-    >
-      Dependable products designed for consistent everyday use.
-    </p>
-  </div>
-
-
-  
-  <div
-    style={{
-      transitionDelay: whyReveal.visible ? "200ms" : "0ms",
-    }}
-    className={`
-      group
-      bg-[#0b0d0d]
-      px-[22px]
-      py-7
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-      hover:bg-[#0f1414]
-
-      ${
-        whyReveal.visible
-          ? "translate-y-0 opacity-100 blur-0"
-          : "translate-y-8 opacity-0 blur-[4px]"
-      }
-    `}
-  >
-    <svg
-      className="
-        mb-[18px]
-        h-[34px]
-        w-[34px]
-        text-[#15E0ED]
-      "
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    >
-      <path d="M3 12a9 9 0 1 0 3-6.7" />
-      <path d="M3 4v5h5" />
-    </svg>
-
-    <h3
-      className="
-        mb-2
-        text-base
-        font-bold
-        text-[#eef2f2]
-      "
-    >
-      Security-first
-    </h3>
-
-    <p
-      className="
-        text-[13.5px]
-        text-[#8a9494]
-      "
-    >
-      Security is considered throughout every product we build.
-    </p>
-  </div>
-
-
-  
-  <div
-    style={{
-      transitionDelay: whyReveal.visible ? "300ms" : "0ms",
-    }}
-    className={`
-      group
-      bg-[#0b0d0d]
-      px-[22px]
-      py-7
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-      hover:bg-[#0f1414]
-
-      ${
-        whyReveal.visible
-          ? "translate-y-0 opacity-100 blur-0"
-          : "translate-y-8 opacity-0 blur-[4px]"
-      }
-    `}
-  >
-    <svg
-      className="
-        mb-[18px]
-        h-[34px]
-        w-[34px]
-        text-[#15E0ED]
-      "
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    >
-      <path d="M7 18a5 5 0 0 1-1-9.9A6 6 0 0 1 17.5 8 4.5 4.5 0 0 1 17 17H7Z" />
-    </svg>
-
-    <h3
-      className="
-        mb-2
-        text-base
-        font-bold
-        text-[#eef2f2]
-      "
-    >
-      Scalable
-    </h3>
-
-    <p
-      className="
-        text-[13.5px]
-        text-[#8a9494]
-      "
-    >
-      Solutions designed to grow with people, teams, and businesses.
-    </p>
-  </div>
-
-</div>
-</div>
-</section>
-
-      
-
-<section
-  id="faq"
-  ref={faqSectionRef}
-  className="relative"
->
-  <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
-
-    <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
-
-      
-
-      <div className="lg:sticky lg:top-32 lg:self-start">
-
-        {/* Badge */}
-       
-
-        {/* Heading */}
-        <h2
-          className="
-            mt-6
-            text-4xl
-            font-black
-            tracking-[-0.04em]
-            text-[#eef2f2]
-            sm:text-5xl
-          "
-        >
-          Questions
-          <br />
-
-          <span
+          <section
+            id="booking"
             className="
-              bg-gradient-to-r
-              from-white
-              via-[#15E0ED]
-              to-white
-              bg-clip-text
-              text-transparent
+              relative
+              z-20
+              -mt-20
+              scroll-mt-24
+              px-5
+              sm:px-8
+              lg:px-10
             "
           >
-            before we build.
-          </span>
-        </h2>
 
-        {/* Description */}
-        <p className="mt-6 max-w-md text-sm leading-7 text-[#687272]">
-          Beberapa hal yang biasanya ingin diketahui sebelum memulai
-          software, web, application, atau security project bersama
-          Centa.
-        </p>
+            <div className="mx-auto max-w-6xl">
 
-        
+              <div
+                className="
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-[#151514]
+                  shadow-[0_25px_80px_rgba(0,0,0,0.35)]
+                "
+              >
 
-        <div
-          className="
-            mt-10
-            overflow-hidden
-            rounded-3xl
-            border
-            border-[#1a1d1d]
-            bg-[#0b0d0d]/60
-            backdrop-blur-xl
-          "
-        >
+                <div className="grid md:grid-cols-4">
 
-       
-             
-        </div>
+                  <div className="border-b border-white/10 p-5 md:border-b-0 md:border-r">
+                    <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-white/40">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      Check-in
+                    </div>
 
-      </div>
+                    <input
+                      type="date"
+                      className="
+                        mt-2
+                        w-full
+                        bg-transparent
+                        text-sm
+                        text-white
+                        outline-none
+                      "
+                    />
+                  </div>
 
+                  <div className="border-b border-white/10 p-5 md:border-b-0 md:border-r">
+                    <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-white/40">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      Check-out
+                    </div>
 
+                    <input
+                      type="date"
+                      className="
+                        mt-2
+                        w-full
+                        bg-transparent
+                        text-sm
+                        text-white
+                        outline-none
+                      "
+                    />
+                  </div>
 
+                  <div className="border-b border-white/10 p-5 md:border-b-0 md:border-r">
+                    <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-white/40">
+                      <Users className="h-3.5 w-3.5" />
+                      Guests
+                    </div>
 
-<div className="space-y-3">
+                    <select
+                      className="
+                        mt-2
+                        w-full
+                        bg-transparent
+                        text-sm
+                        text-white
+                        outline-none
+                      "
+                    >
+                      <option className="bg-[#151514]">
+                        1 Guest
+                      </option>
+                      <option className="bg-[#151514]">
+                        2 Guests
+                      </option>
+                      <option className="bg-[#151514]">
+                        3 Guests
+                      </option>
+                      <option className="bg-[#151514]">
+                        4 Guests
+                      </option>
+                    </select>
+                  </div>
 
-  {faqs.map((faq, index) => {
-    const isOpen = openFaq === index;
+                  <a
+                    href="#rooms"
+                    className="
+                      flex
+                      min-h-[90px]
+                      items-center
+                      justify-center
+                      gap-2
+                      bg-[#c8a96b]
+                      text-sm
+                      font-bold
+                      text-[#17130c]
+                      transition
+                      hover:bg-[#d8bd82]
+                    "
+                  >
+                    Check Availability
 
-    return (
-      <div
-        key={faq.question}
-        style={{
-          transitionDelay: faqVisible
-            ? `${index * 100}ms`
-            : "0ms",
-        }}
-        className={`
-          group
-          overflow-hidden
-          rounded-3xl
-          border
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
 
-        
+                </div>
 
-          transition-all
-          duration-700
-          ease-[cubic-bezier(0.22,1,0.36,1)]
+              </div>
 
-          ${
-            faqVisible
-              ? `
-                translate-x-0
-                opacity-100
-                blur-0
-              `
-              : `
-                translate-x-12
-                opacity-0
-                blur-[4px]
-              `
-          }
+            </div>
+          </section>
 
-        
+          {/* =================================================
+              ROOMS
+          ================================================= */}
 
-          ${
-            isOpen
-              ? `
-                border-[#15E0ED]/20
-                bg-[#15E0ED]/[0.025]
-                shadow-[0_15px_50px_rgba(21,224,237,0.045)]
-              `
-              : `
-                border-[#1a1d1d]
-                bg-[#0b0d0d]/60
-                backdrop-blur-xl
-                hover:border-[#15E0ED]/10
-                hover:bg-[#0e1111]
-              `
-          }
-        `}
-      >
-
-        <button
-          type="button"
-          onClick={() =>
-            setOpenFaq(isOpen ? null : index)
-          }
-          className="
-            flex
-            w-full
-            items-start
-            gap-5
-            px-6
-            py-6
-            text-left
-            sm:px-7
-          "
-        >
-
-         
-
-          <div
-            className={`
-              mt-0.5
-              flex
-              h-8
-              w-8
-              shrink-0
-              items-center
-              justify-center
-              rounded-xl
-              border
-              text-[10px]
-              font-black
-              transition-all
-              duration-300
-
-              ${
-                isOpen
-                  ? `
-                    border-[#15E0ED]/20
-                    bg-[#15E0ED]/10
-                    text-[#15E0ED]
-                    shadow-[0_0_15px_rgba(21,224,237,0.08)]
-                  `
-                  : `
-                    border-[#1a1d1d]
-                    bg-white/[0.015]
-                    text-[#3f4949]
-                    group-hover:border-[#15E0ED]/10
-                    group-hover:text-[#687272]
-                  `
-              }
-            `}
+          <section
+            id="rooms"
+            className="scroll-mt-24 px-6 py-28 sm:px-8 lg:px-10 lg:py-36"
           >
-            0{index + 1}
-          </div>
 
+            <div className="mx-auto max-w-7xl">
 
-        
+              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
 
-          <div className="flex-1">
+                <div>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                    Accommodation
+                  </span>
 
-            {/* QUESTION */}
+                  <h2
+                    className="
+                      mt-5
+                      max-w-xl
+                      font-serif
+                      text-4xl
+                      leading-tight
+                      tracking-[-0.03em]
+                      sm:text-5xl
+                    "
+                  >
+                    Rooms designed
+                    <br />
+                    <span className="italic text-[#c8a96b]">
+                      for your comfort.
+                    </span>
+                  </h2>
+                </div>
+
+                <p className="max-w-md text-sm leading-7 text-white/45 lg:ml-auto">
+                  From intimate rooms to spacious suites, every space
+                  is thoughtfully designed to make your stay comfortable,
+                  peaceful, and memorable.
+                </p>
+
+              </div>
+
+              <div
+                ref={roomsReveal.ref}
+                className="mt-14 grid gap-6 lg:grid-cols-3"
+              >
+
+                {rooms.map((room, index) => (
+                  <article
+                    key={room.name}
+                    style={{
+                      transitionDelay: roomsReveal.visible
+                        ? `${index * 100}ms`
+                        : "0ms",
+                    }}
+                    className={`
+                      group
+                      overflow-hidden
+                      rounded-2xl
+                      border
+                      border-white/10
+                      bg-[#121211]
+                      transition-all
+                      duration-700
+                      hover:-translate-y-1
+                      hover:border-[#c8a96b]/30
+
+                      ${
+                        roomsReveal.visible
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-10 opacity-0"
+                      }
+                    `}
+                  >
+
+                    <div className="aspect-[4/3] overflow-hidden">
+
+                      <img
+                        src={room.image}
+                        alt={room.name}
+                        className="
+                          h-full
+                          w-full
+                          object-cover
+                          transition
+                          duration-700
+                          group-hover:scale-105
+                        "
+                      />
+
+                    </div>
+
+                    <div className="p-6">
+
+                      <div className="flex items-start justify-between gap-5">
+
+                        <div>
+                          <h3 className="font-serif text-2xl">
+                            {room.name}
+                          </h3>
+
+                          <p className="mt-2 text-xs leading-6 text-white/40">
+                            {room.description}
+                          </p>
+                        </div>
+
+                        <div className="shrink-0 text-right">
+
+                          <div className="font-serif text-xl text-[#e3d0a6]">
+                            Rp{" "}
+                            {room.price.toLocaleString(
+                              "id-ID"
+                            )}
+                          </div>
+
+                          <div className="text-[9px] uppercase tracking-wider text-white/30">
+                            per night
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <div
+                        className="
+                          mt-6
+                          flex
+                          flex-wrap
+                          gap-4
+                          border-t
+                          border-white/10
+                          pt-5
+                          text-[10px]
+                          uppercase
+                          tracking-wider
+                          text-white/40
+                        "
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <BedDouble className="h-3.5 w-3.5" />
+                          {room.bed}
+                        </span>
+
+                        <span>
+                          {room.size}
+                        </span>
+
+                        <span>
+                          {room.guests}
+                        </span>
+                      </div>
+
+                      <a
+                        href="#booking"
+                        className="
+                          mt-6
+                          flex
+                          items-center
+                          justify-center
+                          gap-2
+                          rounded-lg
+                          border
+                          border-white/10
+                          px-4
+                          py-3
+                          text-xs
+                          font-semibold
+                          transition
+                          hover:border-[#c8a96b]/40
+                          hover:bg-[#c8a96b]/10
+                        "
+                      >
+                        Reserve Room
+
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </a>
+
+                    </div>
+
+                  </article>
+                ))}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              FACILITIES
+          ================================================= */}
+
+          <section
+            id="facilities"
+            className="
+              scroll-mt-24
+              border-y
+              border-white/5
+              bg-[#111110]
+              px-6
+              py-28
+              sm:px-8
+              lg:px-10
+              lg:py-36
+            "
+          >
+
+            <div className="mx-auto max-w-7xl">
+
+              <div className="max-w-2xl">
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                  Hotel Facilities
+                </span>
+
+                <h2 className="mt-5 font-serif text-4xl tracking-tight sm:text-5xl">
+                  Everything you need,
+                  <br />
+                  <span className="italic text-[#c8a96b]">
+                    thoughtfully provided.
+                  </span>
+                </h2>
+
+              </div>
+
+              <div
+                ref={facilitiesReveal.ref}
+                className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3"
+              >
+
+                {facilities.map((facility, index) => {
+
+                  const Icon = facility.icon;
+
+                  return (
+                    <div
+                      key={facility.title}
+                      style={{
+                        transitionDelay:
+                          facilitiesReveal.visible
+                            ? `${index * 80}ms`
+                            : "0ms",
+                      }}
+                      className={`
+                        group
+                        bg-[#111110]
+                        p-7
+                        transition-all
+                        duration-700
+                        hover:bg-[#171716]
+
+                        ${
+                          facilitiesReveal.visible
+                            ? "translate-y-0 opacity-100"
+                            : "translate-y-8 opacity-0"
+                        }
+                      `}
+                    >
+
+                      <Icon
+                        className="
+                          h-7
+                          w-7
+                          text-[#c8a96b]
+                          transition
+                          group-hover:scale-110
+                        "
+                      />
+
+                      <h3 className="mt-6 font-serif text-xl">
+                        {facility.title}
+                      </h3>
+
+                      <p className="mt-2 text-xs leading-6 text-white/40">
+                        {facility.description}
+                      </p>
+
+                    </div>
+                  );
+                })}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              ABOUT
+          ================================================= */}
+
+          <section
+            id="about"
+            className="scroll-mt-24 px-6 py-28 sm:px-8 lg:px-10 lg:py-36"
+          >
+
+            <div
+              ref={aboutReveal.ref}
+              className={`
+                mx-auto
+                grid
+                max-w-7xl
+                gap-14
+                lg:grid-cols-2
+                lg:items-center
+
+                transition-all
+                duration-1000
+
+                ${
+                  aboutReveal.visible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }
+              `}
+            >
+
+              <div className="relative">
+
+                <img
+                  src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=85"
+                  alt="Hotel interior"
+                  className="
+                    aspect-[4/5]
+                    w-full
+                    rounded-2xl
+                    object-cover
+                  "
+                />
+
+                <div
+                  className="
+                    absolute
+                    -bottom-7
+                    -right-5
+                    hidden
+                    w-52
+                    rounded-xl
+                    border
+                    border-white/10
+                    bg-[#151514]
+                    p-5
+                    shadow-2xl
+                    sm:block
+                  "
+                >
+                  <div className="font-serif text-3xl text-[#c8a96b]">
+                    15+
+                  </div>
+
+                  <div className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/40">
+                    Years of hospitality
+                  </div>
+                </div>
+
+              </div>
+
+              <div>
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                  Our Story
+                </span>
+
+                <h2
+                  className="
+                    mt-5
+                    font-serif
+                    text-4xl
+                    leading-tight
+                    sm:text-5xl
+                  "
+                >
+                  Hospitality with
+                  <br />
+                  <span className="italic text-[#c8a96b]">
+                    intention.
+                  </span>
+                </h2>
+
+                <p className="mt-7 text-sm leading-7 text-white/50">
+                  At {hotelConfig.name}, we believe great hospitality
+                  is about more than beautiful rooms. It is about
+                  creating an environment where every detail feels
+                  considered and every guest feels genuinely welcome.
+                </p>
+
+                <p className="mt-5 text-sm leading-7 text-white/50">
+                  From the first welcome to the final morning,
+                  our team is committed to delivering thoughtful
+                  service, comfortable spaces, and experiences worth
+                  remembering.
+                </p>
+
+                <div className="mt-8 flex items-center gap-5">
+
+                  <div>
+                    <div className="font-serif text-2xl">
+                      4.9/5
+                    </div>
+
+                    <div className="mt-1 text-[9px] uppercase tracking-wider text-white/30">
+                      Guest satisfaction
+                    </div>
+                  </div>
+
+                  <div className="h-10 w-px bg-white/10" />
+
+                  <div>
+                    <div className="font-serif text-2xl">
+                      98%
+                    </div>
+
+                    <div className="mt-1 text-[9px] uppercase tracking-wider text-white/30">
+                      Returning guests
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              OFFER
+          ================================================= */}
+
+          <section
+            ref={offersReveal.ref}
+            className="px-6 py-20 sm:px-8 lg:px-10"
+          >
 
             <div
               className={`
-                text-sm
-                font-bold
-                transition-colors
-                duration-300
-                sm:text-[15px]
+                mx-auto
+                max-w-7xl
+                overflow-hidden
+                rounded-3xl
+                border
+                border-[#c8a96b]/20
+                bg-[#171512]
+                transition-all
+                duration-1000
 
                 ${
-                  isOpen
-                    ? "text-[#15E0ED]"
-                    : "text-[#eef2f2]"
+                  offersReveal.visible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }
               `}
             >
-              {faq.question}
+
+              <div className="grid lg:grid-cols-2">
+
+                <div className="p-8 sm:p-12 lg:p-16">
+
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                    Special Offer
+                  </span>
+
+                  <h2 className="mt-5 max-w-xl font-serif text-4xl leading-tight sm:text-5xl">
+                    Stay longer,
+                    <br />
+                    <span className="italic text-[#c8a96b]">
+                      experience more.
+                    </span>
+                  </h2>
+
+                  <p className="mt-6 max-w-lg text-sm leading-7 text-white/45">
+                    Enjoy exclusive benefits when you stay three nights
+                    or more, including complimentary breakfast and
+                    a late check-out subject to availability.
+                  </p>
+
+                  <a
+                    href="#booking"
+                    className="
+                      mt-8
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-lg
+                      bg-[#c8a96b]
+                      px-6
+                      py-3.5
+                      text-sm
+                      font-bold
+                      text-black
+                      transition
+                      hover:bg-[#d8bd82]
+                    "
+                  >
+                    View Offer
+
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+
+                </div>
+
+                <div
+                  className="
+                    min-h-[350px]
+                    bg-[url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1400&q=85')]
+                    bg-cover
+                    bg-center
+                  "
+                />
+
+              </div>
+
             </div>
+          </section>
 
+          {/* =================================================
+              GALLERY
+          ================================================= */}
 
-           
+          <section
+            id="gallery"
+            className="scroll-mt-24 px-6 py-28 sm:px-8 lg:px-10 lg:py-36"
+          >
 
-            {isOpen && (
+            <div className="mx-auto max-w-7xl">
+
+              <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+
+                <div>
+
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                    Gallery
+                  </span>
+
+                  <h2 className="mt-5 font-serif text-4xl sm:text-5xl">
+                    A glimpse of
+                    <br />
+                    <span className="italic text-[#c8a96b]">
+                      your stay.
+                    </span>
+                  </h2>
+
+                </div>
+
+                <p className="max-w-sm text-sm leading-7 text-white/40">
+                  Discover the spaces, details, and atmosphere that
+                  make {hotelConfig.name} unique.
+                </p>
+
+              </div>
+
               <div
+                ref={galleryReveal.ref}
+                className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4"
+              >
+
+                {[
+                  "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1000&q=85",
+                  "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1000&q=85",
+                ].map((image, index) => (
+                  <div
+                    key={image}
+                    style={{
+                      transitionDelay:
+                        galleryReveal.visible
+                          ? `${index * 70}ms`
+                          : "0ms",
+                    }}
+                    className={`
+                      group
+                      overflow-hidden
+                      rounded-xl
+                      transition-all
+                      duration-700
+
+                      ${
+                        galleryReveal.visible
+                          ? "scale-100 opacity-100"
+                          : "scale-95 opacity-0"
+                      }
+                    `}
+                  >
+
+                    <img
+                      src={image}
+                      alt={`Hotel gallery ${index + 1}`}
+                      className="
+                        aspect-square
+                        h-full
+                        w-full
+                        object-cover
+                        transition
+                        duration-700
+                        group-hover:scale-105
+                      "
+                    />
+
+                  </div>
+                ))}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              TESTIMONIALS
+          ================================================= */}
+
+          <section
+            ref={testimonialsReveal.ref}
+            className="
+              border-y
+              border-white/5
+              bg-[#111110]
+              px-6
+              py-28
+              sm:px-8
+              lg:px-10
+              lg:py-36
+            "
+          >
+
+            <div className="mx-auto max-w-7xl">
+
+              <div className="text-center">
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                  Guest Reviews
+                </span>
+
+                <h2 className="mt-5 font-serif text-4xl sm:text-5xl">
+                  What our guests
+                  <br />
+                  <span className="italic text-[#c8a96b]">
+                    remember.
+                  </span>
+                </h2>
+
+              </div>
+
+              <div className="mt-14 grid gap-5 lg:grid-cols-3">
+
+                {testimonials.map((testimonial, index) => (
+                  <article
+                    key={testimonial.name}
+                    style={{
+                      transitionDelay:
+                        testimonialsReveal.visible
+                          ? `${index * 100}ms`
+                          : "0ms",
+                    }}
+                    className={`
+                      rounded-2xl
+                      border
+                      border-white/10
+                      bg-[#151514]
+                      p-7
+                      transition-all
+                      duration-700
+
+                      ${
+                        testimonialsReveal.visible
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-8 opacity-0"
+                      }
+                    `}
+                  >
+
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className="
+                            h-3.5
+                            w-3.5
+                            fill-[#c8a96b]
+                            text-[#c8a96b]
+                          "
+                        />
+                      ))}
+                    </div>
+
+                    <p className="mt-6 text-sm leading-7 text-white/55">
+                      “{testimonial.text}”
+                    </p>
+
+                    <div className="mt-7 border-t border-white/10 pt-5">
+
+                      <div className="text-sm font-semibold">
+                        {testimonial.name}
+                      </div>
+
+                      <div className="mt-1 text-[10px] uppercase tracking-wider text-white/30">
+                        {testimonial.role}
+                      </div>
+
+                    </div>
+
+                  </article>
+                ))}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              FAQ
+          ================================================= */}
+
+          <section className="px-6 py-28 sm:px-8 lg:px-10 lg:py-36">
+
+            <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.75fr_1.25fr]">
+
+              <div>
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                  FAQ
+                </span>
+
+                <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
+                  Questions
+                  <br />
+                  <span className="italic text-[#c8a96b]">
+                    before your stay.
+                  </span>
+                </h2>
+
+                <p className="mt-6 max-w-md text-sm leading-7 text-white/40">
+                  Everything you need to know before making
+                  your reservation.
+                </p>
+
+              </div>
+
+              <div className="space-y-3">
+
+                {faqs.map((faq, index) => {
+
+                  const isOpen = openFaq === index;
+
+                  return (
+                    <div
+                      key={faq.question}
+                      className={`
+                        overflow-hidden
+                        rounded-xl
+                        border
+                        transition-all
+                        duration-300
+
+                        ${
+                          isOpen
+                            ? "border-[#c8a96b]/30 bg-[#171512]"
+                            : "border-white/10 bg-[#121211]"
+                        }
+                      `}
+                    >
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setOpenFaq(
+                            isOpen ? null : index
+                          )
+                        }
+                        className="
+                          flex
+                          w-full
+                          items-center
+                          justify-between
+                          gap-5
+                          px-6
+                          py-5
+                          text-left
+                        "
+                      >
+
+                        <div className="flex items-center gap-4">
+
+                          <span className="text-[10px] font-bold text-[#c8a96b]">
+                            0{index + 1}
+                          </span>
+
+                          <span className="text-sm font-semibold">
+                            {faq.question}
+                          </span>
+
+                        </div>
+
+                        <ChevronDown
+                          className={`
+                            h-4
+                            w-4
+                            shrink-0
+                            transition
+                            duration-300
+
+                            ${
+                              isOpen
+                                ? "rotate-180 text-[#c8a96b]"
+                                : "text-white/30"
+                            }
+                          `}
+                        />
+
+                      </button>
+
+                      {isOpen && (
+                        <div className="border-t border-white/10 px-6 pb-6 pt-4">
+
+                          <p className="max-w-2xl text-sm leading-7 text-white/45">
+                            {faq.answer}
+                          </p>
+
+                        </div>
+                      )}
+
+                    </div>
+                  );
+                })}
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* =================================================
+              CONTACT / RESERVATION
+          ================================================= */}
+
+          <section
+            id="contact"
+            className="
+              scroll-mt-24
+              border-t
+              border-white/5
+              bg-[#111110]
+              px-6
+              py-28
+              sm:px-8
+              lg:px-10
+              lg:py-36
+            "
+          >
+
+            <div className="mx-auto max-w-7xl">
+
+              <div className="max-w-2xl">
+
+                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                  Reservations/Booking
+                </span>
+
+                <h2 className="mt-5 font-serif text-4xl sm:text-5xl">
+                  Plan your
+                  <br />
+                  <span className="italic text-[#c8a96b]">
+                    perfect stay.
+                  </span>
+                </h2>
+
+                <p className="mt-6 text-sm leading-7 text-white/45">
+                  Tell us about your stay and our reservation team
+                  will get back to you with availability and details.
+                </p>
+
+              </div>
+
+              <div
+                ref={contactReveal.ref}
                 className="
-                  mt-4
-                  max-w-2xl
-                  border-t
-                  border-[#15E0ED]/10
-                  pt-4
+                  mt-12
+                  grid
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-[#151514]
+                  lg:grid-cols-[1.1fr_0.9fr]
                 "
               >
-                <p
-                  className="
-                    text-sm
-                    leading-7
-                    text-[#687272]
-                  "
+
+                {/* FORM */}
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-5 p-7 sm:p-9 lg:p-10"
                 >
-                  {faq.answer}
-                </p>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Full Name
+                      </label>
+
+                      <input
+                        id="name"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="John Smith"
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/20
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          transition
+                          placeholder:text-white/20
+                          focus:border-[#c8a96b]/50
+                        "
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Email
+                      </label>
+
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="name@email.com"
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/20
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          transition
+                          placeholder:text-white/20
+                          focus:border-[#c8a96b]/50
+                        "
+                      />
+                    </div>
+
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Phone
+                      </label>
+
+                      <input
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="+62 812..."
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/20
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          transition
+                          placeholder:text-white/20
+                          focus:border-[#c8a96b]/50
+                        "
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="guests"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Guests
+                      </label>
+
+                      <select
+                        id="guests"
+                        name="guests"
+                        value={formData.guests}
+                        onChange={handleInputChange}
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-[#151514]
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          focus:border-[#c8a96b]/50
+                        "
+                      >
+                        <option value="1">
+                          1 Guest
+                        </option>
+
+                        <option value="2">
+                          2 Guests
+                        </option>
+
+                        <option value="3">
+                          3 Guests
+                        </option>
+
+                        <option value="4">
+                          4 Guests
+                        </option>
+
+                        <option value="5+">
+                          5+ Guests
+                        </option>
+                      </select>
+                    </div>
+
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+
+                    <div>
+                      <label
+                        htmlFor="checkIn"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Check-in
+                      </label>
+
+                      <input
+                        id="checkIn"
+                        name="checkIn"
+                        type="date"
+                        value={formData.checkIn}
+                        onChange={handleInputChange}
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/20
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          focus:border-[#c8a96b]/50
+                        "
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="checkOut"
+                        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                      >
+                        Check-out
+                      </label>
+
+                      <input
+                        id="checkOut"
+                        name="checkOut"
+                        type="date"
+                        value={formData.checkOut}
+                        onChange={handleInputChange}
+                        className="
+                          mt-2
+                          w-full
+                          rounded-lg
+                          border
+                          border-white/10
+                          bg-black/20
+                          px-4
+                          py-3
+                          text-sm
+                          text-white
+                          outline-none
+                          focus:border-[#c8a96b]/50
+                        "
+                      />
+                    </div>
+
+                  </div>
+
+                  <div>
+
+                    <label
+                      htmlFor="message"
+                      className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+                    >
+                      Message
+                    </label>
+
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Tell us anything we should know about your stay..."
+                      className="
+                        mt-2
+                        w-full
+                        resize-y
+                        rounded-lg
+                        border
+                        border-white/10
+                        bg-black/20
+                        px-4
+                        py-3
+                        text-sm
+                        leading-6
+                        text-white
+                        outline-none
+                        placeholder:text-white/20
+                        focus:border-[#c8a96b]/50
+                      "
+                    />
+
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="
+                      inline-flex
+                      items-center
+                      gap-2
+                      rounded-lg
+                      bg-[#c8a96b]
+                      px-6
+                      py-3.5
+                      text-sm
+                      font-bold
+                      text-[#17130c]
+                      transition
+                      hover:-translate-y-0.5
+                      hover:bg-[#d8bd82]
+                    "
+                  >
+                    Send Reservation Request
+
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+
+                </form>
+
+                {/* CONTACT SIDE */}
+
+                <div className="relative overflow-hidden bg-[#0d0d0c]">
+
+                  <div
+                    className="
+                      absolute
+                      -right-20
+                      -top-20
+                      h-72
+                      w-72
+                      rounded-full
+                      bg-[#c8a96b]/10
+                      blur-[90px]
+                    "
+                  />
+
+                  <div className="relative flex h-full flex-col justify-between p-8 sm:p-10">
+
+                    <div>
+
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c8a96b]">
+                        Contact
+                      </div>
+
+                      <h3 className="mt-5 max-w-sm font-serif text-3xl">
+                        We are here to make your stay effortless.
+                      </h3>
+
+                    </div>
+
+                    <div className="mt-12 space-y-5">
+
+                      <a
+                        href={`https://wa.me/${hotelConfig.whatsapp}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-4 group"
+                      >
+
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                          <Phone className="h-4 w-4 text-[#c8a96b]" />
+                        </div>
+
+                        <div>
+                          <div className="text-[9px] uppercase tracking-wider text-white/30">
+                            Reservations
+                          </div>
+
+                          <div className="mt-1 text-sm group-hover:text-[#c8a96b]">
+                            {hotelConfig.phone}
+                          </div>
+                        </div>
+
+                      </a>
+
+                      <a
+                        href={`mailto:${hotelConfig.email}`}
+                        className="flex items-center gap-4 group"
+                      >
+
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                          <Mail className="h-4 w-4 text-[#c8a96b]" />
+                        </div>
+
+                        <div>
+                          <div className="text-[9px] uppercase tracking-wider text-white/30">
+                            Email
+                          </div>
+
+                          <div className="mt-1 text-sm group-hover:text-[#c8a96b]">
+                            {hotelConfig.email}
+                          </div>
+                        </div>
+
+                      </a>
+
+                      <div className="flex items-center gap-4">
+
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                          <MapPin className="h-4 w-4 text-[#c8a96b]" />
+                        </div>
+
+                        <div>
+                          <div className="text-[9px] uppercase tracking-wider text-white/30">
+                            Location
+                          </div>
+
+                          <div className="mt-1 text-sm">
+                            {hotelConfig.address}
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div className="mt-12 border-t border-white/10 pt-6">
+
+                      <div className="flex items-center gap-2">
+
+                        <Star className="h-4 w-4 fill-[#c8a96b] text-[#c8a96b]" />
+
+                        <span className="text-sm font-semibold">
+                          4.9 / 5
+                        </span>
+
+                        <span className="text-xs text-white/30">
+                          from our guests
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
-            )}
 
-          </div>
+            </div>
+          </section>
 
+        </main>
 
-
-
-          <div
-            className={`
-              flex
-              h-8
-              w-8
-              shrink-0
-              items-center
-              justify-center
-              rounded-xl
-              border
-              transition-all
-              duration-300
-
-              ${
-                isOpen
-                  ? `
-                    rotate-180
-                    border-[#15E0ED]/20
-                    bg-[#15E0ED]/10
-                    shadow-[0_0_15px_rgba(21,224,237,0.08)]
-                  `
-                  : `
-                    border-[#1a1d1d]
-                    bg-white/[0.015]
-                  `
-              }
-            `}
-          >
-            <ChevronDown
-              className={`
-                h-3.5
-                w-3.5
-                transition-colors
-
-                ${
-                  isOpen
-                    ? "text-[#15E0ED]"
-                    : "text-[#4e5959]"
-                }
-              `}
-            />
-          </div>
-
-        </button>
+      
 
       </div>
-    );
-  })}
-
-
-
-
-  <div className="flex items-center gap-3 px-2 pt-5">
-
-    <div className="h-px flex-1 bg-[#1a1d1d]" />
-
-    <span
-      className="
-        text-[9px]
-        font-medium
-        uppercase
-        tracking-[0.18em]
-        text-[#3f4949]
-      "
-    >
-      More questions? Let's talk.
-    </span>
-
-    <div className="h-px flex-1 bg-[#1a1d1d]" />
-
-  </div>
-  </div>
-  </div>
-  </div>
-</section>
- 
-
-
-
-<section
-  id="contact"
-  className="
-    relative
-    z-[1]
-    scroll-mt-24
-    py-[100px]
-  "
->
-  <div className="mx-auto max-w-[1180px] px-8">
-
-    
-
-    <div className="max-w-[640px]">
-      <h2
-        className="
-          text-[clamp(26px,3.6vw,40px)]
-          font-extrabold
-          tracking-[-1px]
-          text-[#eef2f2]
-        "
-      >
-        Build the future with us
-      </h2>
-
-      <p
-        className="
-          mt-4
-          max-w-[560px]
-          text-base
-          leading-relaxed
-          text-[#8a9494]
-        "
-      >
-        Have a project in mind, need professional cybersecurity, or want to
-        work with Centa? Tell us what you need and our team will get back to
-        you.
-      </p>
-    </div>
-
-
-
-
-    <div
-      className="
-        mt-7
-        grid
-        overflow-hidden
-        rounded-[14px]
-        border
-        border-[#1a1d1d]
-        bg-[#0b0d0d]
-        lg:grid-cols-[1.05fr_0.95fr]
-      "
-    >
-
-
-
-      <form
-        onSubmit={handleSubmit}
-        className="
-          flex
-          flex-col
-          gap-5
-          border-[#1a1d1d]
-          p-[30px]
-          lg:border-r
-        "
-      >
-
-        {/* Name */}
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-xs font-bold text-[#eef2f2]"
-          >
-            Name
-          </label>
-
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="e.g. John Smith"
-            autoComplete="name"
-            required
-            value={formData.name}
-            onChange={handleInputChange}
-            className="
-              w-full
-              rounded-lg
-              border
-              border-[#1a1d1d]
-              bg-[#0a0c0c]
-              px-[13px]
-              py-3
-              text-[13px]
-              text-[#eef2f2]
-              outline-none
-              transition-all
-              duration-200
-              placeholder:text-[#667070]
-              focus:border-[#15E0ED]/25
-              focus:ring-4
-              focus:ring-[#15E0ED]/[0.12]
-            "
-          />
-        </div>
-
-
-        {/* Email */}
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="email"
-            className="text-xs font-bold text-[#eef2f2]"
-          >
-            Email address
-          </label>
-
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="e.g. name@company.com"
-            autoComplete="email"
-            required
-            value={formData.email}
-            onChange={handleInputChange}
-            className="
-              w-full
-              rounded-lg
-              border
-              border-[#1a1d1d]
-              bg-[#0a0c0c]
-              px-[13px]
-              py-3
-              text-[13px]
-              text-[#eef2f2]
-              outline-none
-              transition-all
-              duration-200
-              placeholder:text-[#667070]
-              focus:border-[#15E0ED]/25
-              focus:ring-4
-              focus:ring-[#15E0ED]/[0.12]
-            "
-          />
-        </div>
-
-
-        {/* Service */}
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="service"
-            className="text-xs font-bold text-[#eef2f2]"
-          >
-            Service
-          </label>
-
-          <select
-            id="service"
-            name="service"
-            required
-            value={formData.service}
-            onChange={handleInputChange}
-            className="
-              w-full
-              appearance-auto
-              rounded-lg
-              border
-              border-[#1a1d1d]
-              bg-[#0a0c0c]
-              px-[13px]
-              py-3
-              text-[13px]
-              text-[#eef2f2]
-              outline-none
-              transition-all
-              duration-200
-              focus:border-[#15E0ED]/25
-              focus:ring-4
-              focus:ring-[#15E0ED]/[0.12]
-            "
-          >
-            <option
-              value=""
-              disabled
-              className="bg-[#0a0c0c]"
-            >
-              Select a service
-            </option>
-
-            <option value="Cybersecurity Services">
-              Cybersecurity Services
-            </option>
-
-            <option value="Penetration Testing">
-              Penetration Testing
-            </option>
-
-            <option value="Software Development">
-              Software Development
-            </option>
-
-            <option value="Web Development">
-              Web Development
-            </option>
-
-            <option value="App Development">
-              App Development
-            </option>
-
-            <option value="Game Development">
-              Game Development
-            </option>
-
-            <option value="Technology Consulting">
-              Technology Consulting
-            </option>
-
-            <option value="Other">
-              Other
-            </option>
-          </select>
-        </div>
-
-
-        {/* Message */}
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="message"
-            className="text-xs font-bold text-[#eef2f2]"
-          >
-            Message
-          </label>
-
-          <textarea
-            id="message"
-            name="message"
-            rows={7}
-            placeholder="Tell us a little about your project or requirements."
-            required
-            value={formData.message}
-            onChange={handleInputChange}
-            className="
-              w-full
-              resize-y
-              rounded-lg
-              border
-              border-[#1a1d1d]
-              bg-[#0a0c0c]
-              px-[13px]
-              py-3
-              text-[13px]
-              leading-relaxed
-              text-[#eef2f2]
-              outline-none
-              transition-all
-              duration-200
-              placeholder:text-[#667070]
-              focus:border-[#15E0ED]/25
-              focus:ring-4
-              focus:ring-[#15E0ED]/[0.12]
-            "
-          />
-        </div>
-
-
-        {/* Submit */}
-
-        <button
-          type="submit"
-          className="
-            inline-flex
-            w-fit
-            items-center
-            gap-2
-            rounded-md
-            border-0
-            bg-[#15E0ED]
-            px-[22px]
-            py-[11px]
-            text-sm
-            font-bold
-            text-[#00171a]
-            transition-all
-            duration-200
-            hover:-translate-y-[1px]
-            hover:shadow-[0_0_26px_rgba(21,224,237,0.55)]
-          "
-        >
-          Send message
-        </button>
-
-      </form>
-
-
-
-
-      <div
-        className="
-          relative
-          min-h-full
-          overflow-hidden
-          bg-[#090b0b]
-        "
-      >
-
-      {/* Ambient Glow */}
-
-<div
-  className="
-    pointer-events-none
-    absolute
-    -bottom-[170px]
-    -right-[150px]
-    h-[340px]
-    w-[340px]
-    rounded-full
-    bg-[#15E0ED]
-    opacity-[0.07]
-    blur-[70px]
-  "
-/>
-
-
-        {/* Side Content */}
-
-        <div
-          className="
-            relative
-            z-10
-            flex
-            h-full
-            flex-col
-            justify-center
-            px-9
-            py-[42px]
-          "
-        >
-
-          <div
-            className="
-              mb-[18px]
-              text-xs
-              font-extrabold
-              uppercase
-              tracking-[0.7px]
-              text-[#15E0ED]
-            "
-          >
-            LET'S CONNECT
-          </div>
-
-
-          <h3
-            className="
-              mb-[18px]
-              max-w-[360px]
-              text-[30px]
-              font-extrabold
-              leading-[1.1]
-              tracking-[-0.7px]
-              text-[#eef2f2]
-            "
-          >
-            Let's build something that matters.
-          </h3>
-
-
-          <p
-            className="
-              max-w-[390px]
-              text-sm
-              leading-[1.7]
-              text-[#8a9494]
-            "
-          >
-            Whether you need a security assessment, a custom application,
-            a website, a game, or a complete digital solution, our team is
-            ready to help.
-          </p>
-
-
-          {/* Accent Line */}
-
-          <div
-            className="
-              my-7
-              h-px
-              w-[54px]
-              bg-[#15E0ED]
-            "
-          />
-
-
-          <span
-            className="
-              text-[11px]
-              uppercase
-              tracking-[0.7px]
-              text-[#7e8888]
-            "
-          >
-            Creating products people love.
-          </span>
-
-        </div>
-      </div>
-
-    </div>
-
-
-<div
-  ref={contactReveal.ref}
-  className="mt-6 flex flex-wrap gap-4"
->
-
-  
-
-  <a
-    style={{
-      transitionDelay: contactReveal.visible
-        ? "0ms"
-        : "0ms",
-    }}
-    href="https://wa.me/6287867738173"
-    target="_blank"
-    rel="noreferrer"
-    className={`
-      group
-      flex
-      w-[250px]
-      items-center
-      gap-3
-      rounded-xl
-      border
-      border-[#1a1d1d]
-      bg-[#0b0d0d]
-      px-4
-      py-3.5
-
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-
-      hover:-translate-y-0.5
-      hover:border-emerald-400/25
-      hover:bg-emerald-400/[0.02]
-
-      ${
-        contactReveal.visible
-          ? "translate-x-0 opacity-100 blur-0"
-          : "-translate-x-12 opacity-0 blur-[5px]"
-      }
-    `}
-  >
-
-    <div
-      className="
-        flex
-        h-9
-        w-9
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-emerald-400/15
-        bg-emerald-400/[0.05]
-      "
-    >
-      <FaWhatsapp
-        className="h-[17px] w-[17px] text-emerald-400"
-      />
-    </div>
-
-    <div className="min-w-0 flex-1">
-
-      <div
-        className="
-          font-mono
-          text-[8px]
-          font-bold
-          uppercase
-          tracking-[0.16em]
-          text-[#4f5959]
-        "
-      >
-        WhatsApp
-      </div>
-
-      <div className="mt-1 text-xs font-semibold text-[#eef2f2]">
-        Chat with us
-      </div>
-
-    </div>
-
-    <ArrowRight
-      className="
-        h-3.5
-        w-3.5
-        shrink-0
-        text-[#414949]
-        transition-all
-        group-hover:translate-x-1
-        group-hover:text-emerald-400
-      "
-    />
-
-  </a>
-
-
-
-
-  <a
-    style={{
-      transitionDelay: contactReveal.visible
-        ? "100ms"
-        : "0ms",
-    }}
-    href="mailto:centalimited@gmail.com"
-    className={`
-      group
-      flex
-      w-[250px]
-      items-center
-      gap-3
-      rounded-xl
-      border
-      border-[#1a1d1d]
-      bg-[#0b0d0d]
-      px-4
-      py-3.5
-
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-
-      hover:-translate-y-0.5
-      hover:border-[#15E0ED]/25
-      hover:bg-[#15E0ED]/[0.02]
-
-      ${
-        contactReveal.visible
-          ? "translate-x-0 opacity-100 blur-0"
-          : "translate-x-12 opacity-0 blur-[5px]"
-      }
-    `}
-  >
-
-    <div
-      className="
-        flex
-        h-9
-        w-9
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-[#15E0ED]/15
-        bg-[#15E0ED]/[0.05]
-      "
-    >
-      <FaEnvelope
-        className="h-[17px] w-[17px] text-[#15E0ED]"
-      />
-    </div>
-
-    <div className="min-w-0 flex-1">
-
-      <div
-        className="
-          font-mono
-          text-[8px]
-          font-bold
-          uppercase
-          tracking-[0.16em]
-          text-[#4f5959]
-        "
-      >
-        Email
-      </div>
-
-      <div className="mt-1 truncate text-xs font-semibold text-[#eef2f2]">
-        Email us
-      </div>
-
-    </div>
-
-    <ArrowRight
-      className="
-        h-3.5
-        w-3.5
-        shrink-0
-        text-[#414949]
-        transition-all
-        group-hover:translate-x-1
-        group-hover:text-[#15E0ED]
-      "
-    />
-
-  </a>
-
-
-  
-
-  <a
-    style={{
-      transitionDelay: contactReveal.visible
-        ? "200ms"
-        : "0ms",
-    }}
-    href="https://instagram.com/centa.ltd"
-    target="_blank"
-    rel="noreferrer"
-    className={`
-      group
-      flex
-      w-[250px]
-      items-center
-      gap-3
-      rounded-xl
-      border
-      border-[#1a1d1d]
-      bg-[#0b0d0d]
-      px-4
-      py-3.5
-
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-
-      hover:-translate-y-0.5
-      hover:border-violet-400/25
-      hover:bg-violet-400/[0.02]
-
-      ${
-        contactReveal.visible
-          ? "translate-x-0 opacity-100 blur-0"
-          : "-translate-x-12 opacity-0 blur-[5px]"
-      }
-    `}
-  >
-
-    <div
-      className="
-        flex
-        h-9
-        w-9
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-violet-400/15
-        bg-violet-400/[0.05]
-      "
-    >
-      <FaInstagram
-        className="h-[17px] w-[17px] text-violet-400"
-      />
-    </div>
-
-    <div className="min-w-0 flex-1">
-
-      <div
-        className="
-          font-mono
-          text-[8px]
-          font-bold
-          uppercase
-          tracking-[0.16em]
-          text-[#4f5959]
-        "
-      >
-        Instagram
-      </div>
-
-      <div className="mt-1 text-xs font-semibold text-[#eef2f2]">
-        Follow us
-      </div>
-
-    </div>
-
-    <ArrowRight
-      className="
-        h-3.5
-        w-3.5
-        shrink-0
-        text-[#414949]
-        transition-all
-        group-hover:translate-x-1
-        group-hover:text-violet-400
-      "
-    />
-
-  </a>
-
-
-  
-
-  <a
-    style={{
-      transitionDelay: contactReveal.visible
-        ? "300ms"
-        : "0ms",
-    }}
-    href="https://github.com/Centa-Limited"
-    target="_blank"
-    rel="noreferrer"
-    className={`
-      group
-      flex
-      w-[250px]
-      items-center
-      gap-3
-      rounded-xl
-      border
-      border-[#1a1d1d]
-      bg-[#0b0d0d]
-      px-4
-      py-3.5
-
-      transition-all
-      duration-700
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-
-      hover:-translate-y-0.5
-      hover:border-white/20
-      hover:bg-white/[0.02]
-
-      ${
-        contactReveal.visible
-          ? "translate-x-0 opacity-100 blur-0"
-          : "translate-x-12 opacity-0 blur-[5px]"
-      }
-    `}
-  >
-
-    <div
-      className="
-        flex
-        h-9
-        w-9
-        shrink-0
-        items-center
-        justify-center
-        rounded-lg
-        border
-        border-white/10
-        bg-white/[0.03]
-      "
-    >
-      <FaGithub
-        className="h-[17px] w-[17px] text-[#c7cece]"
-      />
-    </div>
-
-    <div className="min-w-0 flex-1">
-
-      <div
-        className="
-          font-mono
-          text-[8px]
-          font-bold
-          uppercase
-          tracking-[0.16em]
-          text-[#4f5959]
-        "
-      >
-        GitHub
-      </div>
-
-      <div className="mt-1 truncate text-xs font-semibold text-[#eef2f2]">
-        Centa Limited
-      </div>
-
-    </div>
-
-    <ArrowRight
-      className="
-        h-3.5
-        w-3.5
-        shrink-0
-        text-[#414949]
-        transition-all
-        group-hover:translate-x-1
-        group-hover:text-white
-      "
-    />
-
-  </a>
-
-</div>
-
-</div>
-</section>
-</main>
-
-</div>
- </>
-);
+    </>
+  );
 }

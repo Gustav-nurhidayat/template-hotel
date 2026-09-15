@@ -1,4 +1,8 @@
-import { FaWhatsapp } from "react-icons/fa6";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa6";
 
 import {
   Link,
@@ -6,7 +10,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-type CompanyLink =
+type HotelLink =
   | {
       name: string;
       type: "section";
@@ -22,26 +26,41 @@ export default function FooterPublic() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const companyLinks: CompanyLink[] = [
+  const hotelLinks: HotelLink[] = [
     {
-      name: "About",
+      name: "About Us",
       type: "section",
       section: "about",
     },
     {
-      name: "Approach",
+      name: "Our Rooms",
       type: "page",
-      path: "/approach",
+      path: "/rooms",
     },
     {
-      name: "Team",
+      name: "Restaurant",
       type: "page",
-      path: "/team",
+      path: "/restaurant",
     },
     {
-      name: "Articles",
+      name: "Café",
       type: "page",
-      path: "/articles",
+      path: "/cafe",
+    },
+    {
+      name: "Facilities",
+      type: "section",
+      section: "facilities",
+    },
+    {
+      name: "Gallery",
+      type: "section",
+      section: "gallery",
+    },
+    {
+      name: "FAQ",
+      type: "section",
+      section: "faq",
     },
     {
       name: "Contact",
@@ -50,13 +69,13 @@ export default function FooterPublic() {
     },
   ];
 
-  const capabilities = [
-    "Software Engineering",
-    "Web Development",
-    "Application Development",
-    "Cyber Security Service",
-    "Cloud Infrastructure",
-    "Security Advisory",
+  const experiences = [
+    "Luxury Rooms & Suites",
+    "Infinity Swimming Pool",
+    "Fine Dining Restaurant",
+    "Aurelia Café",
+    "Complimentary Wi-Fi",
+    "24/7 Front Desk",
   ];
 
   const handleSectionNavigation = (section: string) => {
@@ -78,12 +97,12 @@ export default function FooterPublic() {
         relative
         overflow-hidden
         border-t
-        border-[#1a1d1d]
-        bg-[#060707]
+        border-[#2b2925]
+        bg-[#0b0a08]
       "
     >
       {/* =========================================================
-          GRID BACKGROUND
+          AMBIENT BACKGROUND
       ========================================================== */}
 
       <div
@@ -91,7 +110,20 @@ export default function FooterPublic() {
           pointer-events-none
           absolute
           inset-0
-          bg-[linear-gradient(to_right,rgba(21,224,237,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(21,224,237,0.035)_1px,transparent_1px)]
+          bg-[radial-gradient(circle_at_15%_20%,rgba(216,184,120,0.07),transparent_30%),radial-gradient(circle_at_85%_80%,rgba(216,184,120,0.04),transparent_30%)]
+        "
+      />
+
+      {/* =========================================================
+          SUBTLE GRID
+      ========================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          bg-[linear-gradient(to_right,rgba(216,184,120,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(216,184,120,0.025)_1px,transparent_1px)]
           bg-[size:64px_64px]
           opacity-40
         "
@@ -113,6 +145,96 @@ export default function FooterPublic() {
         "
       >
         {/* =========================================================
+            TOP CTA
+        ========================================================== */}
+
+        <div
+          className="
+            mb-16
+            flex
+            flex-col
+            gap-7
+            border-b
+            border-[#2b2925]
+            pb-14
+            lg:flex-row
+            lg:items-end
+            lg:justify-between
+          "
+        >
+          <div>
+            <span
+              className="
+                text-[10px]
+                font-semibold
+                tracking-[0.35em]
+                text-[#d8b878]
+              "
+            >
+              YOUR NEXT ESCAPE
+            </span>
+
+            <h2
+              className="
+                mt-4
+                max-w-2xl
+                text-3xl
+                font-light
+                leading-tight
+                tracking-[-0.03em]
+                text-[#f5efe3]
+                sm:text-4xl
+                lg:text-5xl
+              "
+            >
+              Stay somewhere
+              <span className="text-[#d8b878]">
+                {" "}worth remembering.
+              </span>
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => handleSectionNavigation("contact")}
+            className="
+              group
+              inline-flex
+              w-fit
+              items-center
+              gap-3
+              rounded-lg
+              border
+              border-[#d8b878]/40
+              bg-[#d8b878]
+              px-6
+              py-3.5
+              text-xs
+              font-bold
+              tracking-[0.12em]
+              text-[#17130c]
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-[#e2c58a]
+              hover:shadow-[0_12px_40px_rgba(216,184,120,0.2)]
+            "
+          >
+            RESERVE YOUR STAY
+
+            <span
+              className="
+                transition-transform
+                duration-300
+                group-hover:translate-x-1
+              "
+            >
+              →
+            </span>
+          </button>
+        </div>
+
+        {/* =========================================================
             MAIN GRID
         ========================================================== */}
 
@@ -120,7 +242,7 @@ export default function FooterPublic() {
           className="
             grid
             gap-14
-            lg:grid-cols-[1.7fr_1fr_1fr]
+            lg:grid-cols-[1.6fr_1fr_1fr]
           "
         >
           {/* =====================================================
@@ -128,10 +250,6 @@ export default function FooterPublic() {
           ====================================================== */}
 
           <div>
-            {/* =================================================
-                BRAND NAME
-            ================================================== */}
-
             <Link
               to="/"
               className="
@@ -144,37 +262,30 @@ export default function FooterPublic() {
               <span
                 className="
                   text-2xl
-                  font-black
+                  font-semibold
                   tracking-[0.16em]
-                  text-white
+                  text-[#f5efe3]
                   transition-colors
                   duration-300
-                  group-hover:text-[#eef2f2]
+                  group-hover:text-white
                   sm:text-[27px]
                 "
               >
-                CENTA
+                AURELIA
               </span>
 
               <span
                 className="
-                  text-2xl
-                  font-black
-                  tracking-[0.16em]
-                  text-[#15E0ED]
-                  transition-colors
-                  duration-300
-                  group-hover:text-[#15E0ED]
-                  sm:text-[27px]
+                  text-[10px]
+                  font-semibold
+                  tracking-[0.28em]
+                  text-[#d8b878]
+                  sm:text-xs
                 "
               >
-                LIMITED
+                HOTEL & RESORT
               </span>
             </Link>
-
-            {/* =================================================
-                DESCRIPTION
-            ================================================== */}
 
             <p
               className="
@@ -182,17 +293,38 @@ export default function FooterPublic() {
                 max-w-md
                 text-sm
                 leading-7
-                text-white/50
+                text-white/45
               "
             >
-              Engineering secure digital products,
-              scalable software systems,
-              infrastructure, and cybersecurity
-              solutions for modern businesses.
+              A refined hospitality experience designed
+              for slow mornings, peaceful evenings, and
+              unforgettable stays.
             </p>
 
             {/* =================================================
-                SOCIAL / CONTACT
+                LOCATION
+            ================================================== */}
+
+            <div
+              className="
+                mt-7
+                text-xs
+                leading-6
+                text-white/40
+              "
+            >
+              <p className="text-[#d8b878]">
+                FIND US
+              </p>
+
+              <p className="mt-1 max-w-xs">
+                88 Ocean View Avenue,
+                Bali, Indonesia
+              </p>
+            </div>
+
+            {/* =================================================
+                SOCIAL
             ================================================== */}
 
             <div
@@ -200,233 +332,136 @@ export default function FooterPublic() {
                 mt-7
                 flex
                 flex-wrap
-                items-center
                 gap-3
               "
             >
-              {/* =================================================
-                  INSTAGRAM
-              ================================================== */}
+              {/* INSTAGRAM */}
 
               <a
-                href="https://instagram.com/centa.ltd"
+                href="https://instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram Centa Limited"
+                aria-label="Instagram"
                 className="
                   group
-                  inline-flex
+                  flex
+                  h-11
+                  w-11
                   items-center
-                  gap-3
+                  justify-center
                   rounded-xl
                   border
                   border-white/[0.08]
                   bg-white/[0.025]
-                  px-4
-                  py-3
-                  text-xs
-                  text-white/45
+                  text-white/40
                   transition-all
                   duration-300
-                  hover:border-[#15E0ED]/25
-                  hover:bg-[#15E0ED]/[0.05]
-                  hover:text-[#15E0ED]
+                  hover:border-[#d8b878]/30
+                  hover:bg-[#d8b878]/[0.06]
+                  hover:text-[#d8b878]
                 "
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
+                <FaInstagram
                   className="
                     h-4
                     w-4
-                    text-white/40
-                    transition-colors
+                    transition-transform
                     duration-300
-                    group-hover:text-[#15E0ED]
+                    group-hover:scale-110
                   "
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    rx="5"
-                  />
-
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="4"
-                  />
-
-                  <circle
-                    cx="17.5"
-                    cy="6.5"
-                    r="1"
-                    fill="currentColor"
-                    stroke="none"
-                  />
-                </svg>
-
-                <span>
-                  centa.ltd
-                </span>
+                />
               </a>
 
-              {/* =================================================
-                  GITHUB
-              ================================================== */}
+              {/* FACEBOOK */}
 
               <a
-                href="https://github.com/Centa-Limited"
+                href="https://facebook.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub Centa Limited"
+                aria-label="Facebook"
                 className="
                   group
-                  inline-flex
+                  flex
+                  h-11
+                  w-11
                   items-center
-                  gap-3
+                  justify-center
                   rounded-xl
                   border
                   border-white/[0.08]
                   bg-white/[0.025]
-                  px-4
-                  py-3
-                  text-xs
-                  text-white/45
+                  text-white/40
                   transition-all
                   duration-300
-                  hover:border-[#15E0ED]/25
-                  hover:bg-[#15E0ED]/[0.05]
-                  hover:text-[#15E0ED]
+                  hover:border-[#d8b878]/30
+                  hover:bg-[#d8b878]/[0.06]
+                  hover:text-[#d8b878]
                 "
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+                <FaFacebookF
                   className="
                     h-4
                     w-4
-                    text-white/40
-                    transition-colors
+                    transition-transform
                     duration-300
-                    group-hover:text-[#15E0ED]
+                    group-hover:scale-110
                   "
-                  aria-hidden="true"
-                >
-                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.25 3.32.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.67.41.35.78 1.04.78 2.1v3.11c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
-                </svg>
-
-                <span>
-                  Centa-Limited
-                </span>
+                />
               </a>
 
-              {/* =================================================
-                  WHATSAPP
-              ================================================== */}
+              {/* WHATSAPP */}
 
-         <a
-  href="https://wa.me/6287867738173"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="WhatsApp Centa Limited"
-  className="
-    group
-    inline-flex
-    items-center
-    gap-3
-    rounded-xl
-    border
-    border-white/[0.08]
-    bg-white/[0.025]
-    px-4
-    py-3
-    text-xs
-    text-white/45
-    transition-all
-    duration-300
-    hover:border-[#15E0ED]/25
-    hover:bg-[#15E0ED]/[0.05]
-    hover:text-[#15E0ED]
-  "
->
-  <FaWhatsapp
-    className="
-      h-4
-      w-4
-      text-white/40
-      transition-colors
-      duration-300
-      group-hover:text-[#15E0ED]
-    "
-  />
-
-  <span>
-    +62 878-6773-8173
-  </span>
-</a>
-            </div>
-
-            {/* =================================================
-                STATUS
-            ================================================== */}
-
-           
-            {/* =================================================
-                TRUST
-            ================================================== */}
-
-            <div
-              className="
-                mt-5
-                flex
-                flex-wrap
-                gap-2
-              "
-            >
-              {[
-                "ISO 27001 Ready",
-                "Secure Architecture",
-                "24/7 Monitoring",
-              ].map((item) => (
-                <span
-                  key={item}
+              <a
+                href="https://wa.me/6280000000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="
+                  group
+                  flex
+                  h-11
+                  w-11
+                  items-center
+                  justify-center
+                  rounded-xl
+                  border
+                  border-white/[0.08]
+                  bg-white/[0.025]
+                  text-white/40
+                  transition-all
+                  duration-300
+                  hover:border-[#d8b878]/30
+                  hover:bg-[#d8b878]/[0.06]
+                  hover:text-[#d8b878]
+                "
+              >
+                <FaWhatsapp
                   className="
-                    rounded-lg
-                    border
-                    border-white/10
-                    bg-white/[0.03]
-                    px-3
-                    py-2
-                    text-[11px]
-                    text-white/50
+                    h-4
+                    w-4
+                    transition-transform
+                    duration-300
+                    group-hover:scale-110
                   "
-                >
-                  {item}
-                </span>
-              ))}
+                />
+              </a>
             </div>
           </div>
 
           {/* =====================================================
-              COMPANY
+              HOTEL
           ====================================================== */}
 
           <div>
             <h4
               className="
-                text-xs
+                text-[10px]
                 font-semibold
                 tracking-[0.35em]
-                text-white/70
+                text-white/60
               "
             >
-              RESOURCES
+              HOTEL
             </h4>
 
             <ul
@@ -435,7 +470,7 @@ export default function FooterPublic() {
                 space-y-4
               "
             >
-              {companyLinks.map((item) => (
+              {hotelLinks.map((item) => (
                 <li key={item.name}>
                   {item.type === "page" ? (
                     <Link
@@ -448,16 +483,18 @@ export default function FooterPublic() {
                         text-sm
                         text-white/45
                         transition-all
+                        duration-300
                         hover:translate-x-1
-                        hover:text-cyan-300
+                        hover:text-[#d8b878]
                       "
                     >
                       <span
                         className="
                           h-px
                           w-0
-                          bg-cyan-400
+                          bg-[#d8b878]
                           transition-all
+                          duration-300
                           group-hover:w-4
                         "
                       />
@@ -478,16 +515,18 @@ export default function FooterPublic() {
                         text-sm
                         text-white/45
                         transition-all
+                        duration-300
                         hover:translate-x-1
-                        hover:text-cyan-300
+                        hover:text-[#d8b878]
                       "
                     >
                       <span
                         className="
                           h-px
                           w-0
-                          bg-cyan-400
+                          bg-[#d8b878]
                           transition-all
+                          duration-300
                           group-hover:w-4
                         "
                       />
@@ -501,19 +540,19 @@ export default function FooterPublic() {
           </div>
 
           {/* =====================================================
-              SERVICES
+              EXPERIENCES
           ====================================================== */}
 
           <div>
             <h4
               className="
-                text-xs
+                text-[10px]
                 font-semibold
                 tracking-[0.35em]
-                text-white/70
+                text-white/60
               "
             >
-              SERVICES
+              EXPERIENCES
             </h4>
 
             <ul
@@ -522,31 +561,41 @@ export default function FooterPublic() {
                 space-y-4
               "
             >
-              {capabilities.map((item) => (
+              {experiences.map((item) => (
                 <li key={item}>
                   <button
                     type="button"
                     onClick={() =>
-                      handleSectionNavigation("services")
+                      handleSectionNavigation("facilities")
                     }
                     className="
                       group
                       flex
-                      w-full
                       items-center
                       gap-3
                       text-left
                       text-sm
                       text-white/45
                       transition-all
+                      duration-300
                       hover:translate-x-1
-                      hover:text-cyan-300
+                      hover:text-[#d8b878]
                     "
                   >
+                    <span
+                      className="
+                        h-1
+                        w-1
+                        rounded-full
+                        bg-[#d8b878]/50
+                        transition-all
+                        duration-300
+                        group-hover:scale-150
+                        group-hover:bg-[#d8b878]
+                      "
+                    />
 
-                    <span className="transition-colors">
-                      {item}
-                    </span>
+                    {item}
                   </button>
                 </li>
               ))}
@@ -554,39 +603,153 @@ export default function FooterPublic() {
           </div>
         </div>
 
-    
+        {/* =========================================================
+            CONTACT STRIP
+        ========================================================== */}
+
+        <div
+          className="
+            mt-16
+            grid
+            gap-4
+            border-y
+            border-white/[0.07]
+            py-7
+            sm:grid-cols-3
+          "
+        >
+          {/* PHONE */}
+
+          <a
+            href="tel:+6280000000000"
+            className="
+              group
+              text-sm
+              text-white/45
+              transition-colors
+              hover:text-[#d8b878]
+            "
+          >
+            <span
+              className="
+                block
+                text-[9px]
+                font-semibold
+                tracking-[0.25em]
+                text-white/30
+              "
+            >
+              RESERVATIONS
+            </span>
+
+            <span className="mt-1 block">
+              +62 800 0000 0000
+            </span>
+          </a>
+
+          {/* EMAIL */}
+
+          <a
+            href="mailto:reservations@aureliahotel.com"
+            className="
+              group
+              text-sm
+              text-white/45
+              transition-colors
+              hover:text-[#d8b878]
+            "
+          >
+            <span
+              className="
+                block
+                text-[9px]
+                font-semibold
+                tracking-[0.25em]
+                text-white/30
+              "
+            >
+              EMAIL
+            </span>
+
+            <span className="mt-1 block">
+              reservations@aureliahotel.com
+            </span>
+          </a>
+
+          {/* HOURS */}
+
+          <div
+            className="
+              text-sm
+              text-white/45
+            "
+          >
+            <span
+              className="
+                block
+                text-[9px]
+                font-semibold
+                tracking-[0.25em]
+                text-white/30
+              "
+            >
+              FRONT DESK
+            </span>
+
+            <span className="mt-1 block">
+              Available 24 hours
+            </span>
+          </div>
+        </div>
+
         {/* =========================================================
             BOTTOM
         ========================================================== */}
 
         <div
           className="
-            mt-12
+            mt-7
             flex
             flex-col
-            gap-5
-            border-t
-            border-white/[0.08]
-            pt-7
-            text-xs
-            text-white/40
+            gap-4
+            text-[11px]
+            text-white/30
             md:flex-row
             md:items-center
             md:justify-between
           "
         >
           <p>
-            © 2026 Centa Limited. All rights reserved.
+            © 2026 Aurelia Hotel & Resort.
+            All rights reserved.
           </p>
 
           <div
             className="
               flex
-              items-center
+              flex-wrap
               gap-5
             "
           >
-          
+            <button
+              type="button"
+              className="
+                transition-colors
+                hover:text-white/60
+              "
+            >
+              Privacy Policy
+            </button>
+
+            <button
+              type="button"
+              className="
+                transition-colors
+                hover:text-white/60
+              "
+            >
+              Terms & Conditions
+            </button>
           </div>
         </div>
       </div>
